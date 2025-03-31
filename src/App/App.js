@@ -11,14 +11,19 @@ import './App.css';                                  // styling
 const App = () => {
 
     return(
-        <>
         <div>
-            App test.
-            <SearchBar />
-            <SearchResults />
-            <PlayList />
+            {/* In <h1> below, replace 'Jammming' title */}
+            <h1>Spotify PlayList Maker</h1>
+
+            
+            <div className="App">
+                <SearchBar />
+                <div className="App-playlist">
+                    <SearchResults />
+                    <PlayList />
+                </div>
+            </div>
         </div>
-        </>
     );
 }
 
