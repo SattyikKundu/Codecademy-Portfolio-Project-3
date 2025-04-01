@@ -10,6 +10,17 @@ import './App.css';                                  // styling
 
 const App = () => {
 
+    const [searchInput,   setSearchInput]   = useState('');   // Tracks input for Search box (used for testing)
+    const getInput = (searchText) => { setSearchInput(searchText) };
+
+    const [accessToken,   setAccessToken]   = useState(null); // Tracks access token for Spotify API
+    const [refreshToken,  setRefreshToken]  = useState(null); // Tracks refresh token used to refresh expired access token
+    const [tokenExpires,  setTokenExpires]  = useState(null); // Tracks expiration time of access token
+    const [searchResults, setSearchResults] = useState([]);   // Tracks search result array after submitting search box
+    const [playList,      setPlaylist]      = useState([]);   // Tracks user choices for which tracks join playlist
+
+    
+
     return(
         <div>
             {/* In <h1> below, replace 'Jammming' title */}
@@ -17,7 +28,8 @@ const App = () => {
 
             
             <div className="App">
-                <SearchBar />
+                <SearchBar onSearch={getInput} />
+                <p>Submitted input is: {searchInput}</p>
                 <div className="App-playlist">
                     <SearchResults />
                     <PlayList />
