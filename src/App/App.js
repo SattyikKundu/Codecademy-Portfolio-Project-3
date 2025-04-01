@@ -62,8 +62,10 @@ const App = () => {
         }
       }
       else{ // Otherwise, both access and refresh tokens exist
-        if(Spotify.isTokenExpired()){ // Checks if access token expired
+
+        if(Spotify.isTokenExpired() === false){ // Checks if access token expired
             console.log('access & refresh token already exist');
+
         }
         else{ // token is expired
             console.log('access_token is expired and needs to be replaced');
