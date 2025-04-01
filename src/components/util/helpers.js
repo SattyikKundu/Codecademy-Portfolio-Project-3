@@ -1,5 +1,6 @@
 /* Below are helper functions for the Spotify object/class in main Spotify.js file.
    There placed here for organization and to save space in Spotify.js file.
+   Also provided commenting to explain how functions work.
 */
 
 
