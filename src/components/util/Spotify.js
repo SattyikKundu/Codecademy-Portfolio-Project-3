@@ -141,12 +141,16 @@ const Spotify = {
     isTokenExpired() {
         const expiration_Time = Number(localStorage.getItem('expiration_time')); // returns stored value as number
     
-        if(!expiration_Time || isNaN(expiration_Time)) { // checks for missing and invalid  values
+        if(!expiration_Time || isNaN(expiration_Time)) { // checks if expiration_Time is missing or invalid 
             console.log('Expiration time is missing OR not on localStorage.');
             return false; 
         } 
-        else {
-            return Date.now() < expiration_Time; // otherwise, checks expiration like normal.
+        else if (Date.now() < expiration_Time) {
+            return true;
         }
+        else if (Date.now() >= expiration_Time){
+            return false;
+        }
+         //return Date.now() < expiration_Time; // otherwise, checks expiration like normal.
     }
 }
