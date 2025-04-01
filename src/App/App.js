@@ -10,6 +10,7 @@ import './App.css';                                  // styling
 
 const App = () => {
 
+
     const [searchInput,   setSearchInput]   = useState('');   // Tracks input for Search box (used for testing)
     const getInput = (searchText) => { setSearchInput(searchText) };
 
