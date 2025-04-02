@@ -1,0 +1,18 @@
+
+html, body {
+    margin: 0;        /* No margins and paddings around html, body to prevent edge 'white' spaces*/
+    padding: 0;
+    font-size: 16px; /* IMPORTANT!! Sets font-size standard (default font-size) from 
+                        which any 'rem' adjustments can be made for nested font-sizes, 
+                        margins, paddings, etc!!! . */
+}
+
+body {
+
+    /* Place holder background color */
+    background-color: beige;
+
+    /** Will Figure Out Background Image Later  **/
+    /* background-image: url(./images/stars-background-2-640x640.jpg); */ 
+    /* background-size: 100%;  */
+}
