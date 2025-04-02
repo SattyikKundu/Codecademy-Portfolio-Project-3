@@ -224,22 +224,33 @@ const Spotify = {
         /* formats input by removing spaces and adding '+' between words */
         let formattedInput = searchInput.trim();
         formattedInput = formattedInput.split(/\s+/).join('+')
+        
 
         /* Inserts formatted input into enpoint url (creating Spotify search query to send via API call) */
         const endPointUrl = `https://api.spotify.com/v1/search?q=${formattedInput}&type=track`;
+                  
+        
+        const accessToken = localStorage.getItem("access_token");
 
-        console.log(`Current access token (returnSearchResults()): ${localStorage.getItem('access_token')}`);
+        if (!accessToken || accessToken==='undefined' || accessToken===null) {
+            console.log('Access token is missing');
+            return 'No access_token in localStorage';
+        }
+        else{
+            console.log(`Current access token (returnSearchResults()): ${accessToken}`);
+        }
         console.log('endpoint: ',endPointUrl);
 
-        const response = await fetch ( // fetches result from Spotify API
+
+        const response = await fetch( // fetch results from Spotify api
             endPointUrl,
             {
-                method: 'GET',
-                header: {
-                    Authorization: `Bearer ${localStorage.getItem('access_token')}`
-                }
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${accessToken.toString()}`
+              }
             }
-        );
+          );
 
         let data = await response.json(); // stores data response
 

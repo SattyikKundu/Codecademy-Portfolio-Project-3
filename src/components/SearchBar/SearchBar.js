@@ -14,7 +14,7 @@ const SearchBar = ({onSearch}) => {
 
     const submitSearch = () => { // On click, submitted input sent back to <App/>
         onSearch(onTypeInput);
-        setSubmitClicked(!submitClicked); // toggles 'submitClicked' value
+        setSubmitClicked(prev => !prev); // toggles 'submitClicked' value
     }
 
     // Get search results after submitting input
@@ -39,10 +39,12 @@ const SearchBar = ({onSearch}) => {
                 fetchResults(); // run fetchResults() again after refreshed token 
             }
             else {
-                console.log('Data Output WIHOUT error: ', searchResultsData);
+                console.log('Data Output WITHOUT error: ', searchResultsData);
                 setSearchResults(searchResultsData);
             }
         }
+
+        fetchResults();
 
     },[submitClicked]);
 
@@ -61,6 +63,7 @@ const SearchBar = ({onSearch}) => {
             >
                 SEARCH
             </div>
+           {/* <p>Submit clicked toggle: {submitClicked.toString()}</p> */}
         </div>
     );
 }
