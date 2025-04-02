@@ -152,7 +152,104 @@ const Spotify = {
         else if (Date.now() >= expiration_Time){
             return true;
         } */
-        return Date.now() > expiration_Time; // If current time past expiration_time, return TRUE, otherwise false;
+        return Date.now() > expiration_Time; // If current time past expiration_time, return TRUE, otherwise FALSE;
+    },
+
+
+    /* If access_token expires at any time, it needs to be refreshed using a refresh_token.
+       This process is executed using the below function. To understand how the code work, read this
+       article which explains the code need to refresh the access_token without reauthentication:
+       https://developer.spotify.com/documentation/web-api/tutorials/refreshing-tokens
+    */
+
+    async refreshToken() {
+
+        const refreshToken = localStorage.getItem('refresh_token');
+        if(!refreshToken) {
+            console.log("Refresh token isn't in storage");
+            return null;
+        }
+
+        const url = "https://accounts.spotify.com/api/token"; // endpoint for getting new access_token
+
+        const payload = { // payload sent to request new access_token
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+                grant_type: 'refresh_token',
+                refresh_token: refreshToken,
+                client_id: clientId
+            })
+        }
+
+        try {
+            const body = await fetch(url, payload); // new access_token request & response
+            const response = await body.json();
+
+            if(response.error && (response.error='invalid_grant')) { // if refresh_token is invalid
+
+                console.log("There's an error with refresh_token during search..");
+
+                /* Since refresh and access tokens are invalid, clear local storage and reauthenticate */
+                localStorage.clear();
+                this.redirectToSpotifyAuth();
+            } 
+            else{ // otherwise, continue like normal...
+                console.log('(refresh) Response is: ',response);
+                console.log('(refresh) New access_token is: ',response.access_token);
+
+                localStorage.setItem('access_token', response.access_token);
+                
+                if (response.refresh_token) { // save new refresh_token is provided
+                localStorage.setItem('refresh_token', response.refresh_token);
+                }
+            }
+
+        }
+        catch(error) {
+            console.log('Error caught during refreshToken(): ', error);
+        }
+    },
+
+    
+
+    /* Below function returns Search Results using the input from the Seach Bex.
+       See below article for more details regarding show Spotify search works: 
+       https://developer.spotify.com/documentation/web-api/reference/search
+    */
+    async returnSearchResults(searchInput) { // returns searchResults from seachBox input
+
+        /* formats input by removing spaces and adding '+' between words */
+        let formattedInput = searchInput.trim();
+        formattedInput = formattedInput.split(/\s+/).join('+')
+
+        /* Inserts formatted input into enpoint url (creating Spotify search query to send via API call) */
+        const endPointUrl = `https://api.spotify.com/v1/search?q=${formattedInput}&type=track`;
+
+        console.log(`Current access token (returnSearchResults()): ${localStorage.getItem('access_token')}`);
+        console.log('endpoint: ',endPointUrl);
+
+        const response = await fetch ( // fetches result from Spotify API
+            endPointUrl,
+            {
+                method: 'GET',
+                header: {
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`
+                }
+            }
+        );
+
+        let data = await response.json(); // stores data response
+
+        if (data.error && data.error.message) { // Checks if error exists (and if it has message)
+            console.log('Error detected: ', data.error.message);
+            return data.error.message; // return error msg
+        }
+        else {
+            return data;// otherwise return data
+        }
     }
 }
 
