@@ -10,9 +10,6 @@ import './App.css';                                  // styling
 
 const App = () => {
   const [searchInput, setSearchInput] = useState(""); // Tracks input for Search box (used for testing)
-  const getInput = (searchText) => {
-    setSearchInput(searchText);
-  };
 
   //const [codeVerifier, setCodeVerfier] = useState('');
   //const [authCode, setAuthCode]        = useState('');
@@ -93,7 +90,7 @@ const App = () => {
       <h1>Spotify PlayList Maker</h1>
 
       <div className="App">
-        <SearchBar onSearch={getInput} />
+        <SearchBar onSearch={setSearchInput} />
         <p>Submitted input is: {searchInput}</p>
         <div className="App-playlist">
           <SearchResults />
