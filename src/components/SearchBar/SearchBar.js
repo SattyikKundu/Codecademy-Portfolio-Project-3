@@ -20,7 +20,7 @@ const SearchBar = ({onSearch}) => {
     useEffect(() =>{
 
         //async fetchResults(){
-            console.log('fetchResults() started');
+        //    console.log('fetchResults() started');
         //        }
 
     },[submitClicked]);
