@@ -35,7 +35,7 @@ const Spotify = {
         // STEP 1: Create code_verifier to then generate code_challenge
         let codeVerifier = window.localStorage.getItem('code_verifier'); // checks if already in local Storage
 
-        if (!codeVerifier) { // If nonexistant, create a new code_verifier
+        if (!codeVerifier || codeVerifier==='undefined' || codeVerifier===null) { // If nonexistant, create a new code_verifier
             codeVerifier = generateRandomString(64);
             window.localStorage.setItem('code_verifier', codeVerifier);
         }
@@ -143,14 +143,17 @@ const Spotify = {
     
         if(!expiration_Time || isNaN(expiration_Time)) { // checks if expiration_Time is missing or invalid 
             console.log('Expiration time is missing OR not on localStorage.');
-            return false; 
+            return true; // isExpired() === true 
         } 
+        /*
         else if (Date.now() < expiration_Time) {
-            return true;
-        }
-        else if (Date.now() >= expiration_Time){
             return false;
         }
-         //return Date.now() < expiration_Time; // otherwise, checks expiration like normal.
+        else if (Date.now() >= expiration_Time){
+            return true;
+        } */
+        return Date.now() > expiration_Time; // If current time past expiration_time, return TRUE, otherwise false;
     }
 }
+
+export default Spotify;

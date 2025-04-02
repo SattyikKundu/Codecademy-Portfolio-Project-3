@@ -37,39 +37,48 @@ const App = () => {
       console.log(`(start) Current time:${Date.now()} |  ExpirationTime:${expirationTime}`);
 
       // If EITHER 'access_token' or 'refresh_token' is missing, undefined, or null..
-      if ((!accessToken || accessToken !== "undefined" || accessToken !== null) || (!refreshToken || refreshToken !== "undefined" || refreshToken !== null)) {
+      if ((!accessToken || accessToken==='undefined' || accessToken===null) || (!refreshToken || refreshToken==="undefined" || refreshToken===null)) {
+
+        console.log('inside giant IF statement');
 
         let urlParams = new URLSearchParams(window.location.search); // checks if auth. 'code' is already in url parameters
         let code = urlParams.get("code");
 
+        console.log('Code is......: ',code);
+
         if (code && code !== "") {  // If 'code' exists and isn't empty, proceed...
 
-          try {
-            console.log("There initially is 'code' in url.");
-            await Spotify.getToken(code); // generate and save new access_token, refresh_token,
+          console.log("There initially is 'code' in url.");
+          await Spotify.getToken(code); // generate and save new access_token, refresh_token,
                                           // and expiration_time to localStorage
 
-            window.history.replaceState({}, document.title, "/"); // Scrubs 'code' param data from url
+          //window.history.replaceState({}, document.title, "/"); // Scrubs 'code' param data from url
 
-            console.log("Access token:  ", accessToken); // Check new values in local Storage
-            console.log("Refresh token: ", refreshToken);
-            console.log(`Current time:${Date.now()} | ExpirationTime:${expirationTime}`);
-          } 
-          catch (error) {
-            console.log("Error executing getToken() inside useEffect()");
-            Spotify.authenticateApp(); // reauthenticate to get new 'code' when this useEffect() and authenticateApp() runs again.
-          }
+          //accessToken = localStorage.getItem("access_token"); // checks if access_token is in storage
+          //refreshToken = localStorage.getItem("refresh_token"); // checks if refresh_token is in storage
+          //expirationTime = localStorage.getItem("expiration_time"); // check if access_token is expired (if exists)
+          //console.log("(c)Access token:  ", accessToken); // Check new values in local Storage
+          //console.log("(c)Refresh token: ", refreshToken);
+          //console.log(`(c)Current time:${Date.now()} | ExpirationTime:${expirationTime}`);
+
+        } else { // There's no tokens nor 'code' available. Reauthenticate
+            console.log('No tokens nor "code", need to reauthenticate');
+            Spotify.redirectToSpotifyAuth(); // Authenticate, get 'code', and store all params in localStorage
+
+            //urlParams = new URLSearchParams(window.location.search);
+            //code = urlParams.get("code");
+            //await Spotify.getToken(code);
         }
       }
       else{ // Otherwise, both access and refresh tokens exist
 
-        if(Spotify.isTokenExpired() === false){ // Checks if access token expired
-            console.log('access & refresh token already exist');
-
+        if(Spotify.isTokenExpired()){ // if authentucate token expired, reauthenticate
+            console.log('access (& refresh) token exist, but is expired');
+            localStorage.clear(); // clear local storage of params
+            Spotify.redirectToSpotifyAuth(); // reauthenticate (later replace with refreshToken() command!)
         }
-        else{ // token is expired
-            console.log('access_token is expired and needs to be replaced');
-            Spotify.authenticateApp();
+        else{ // access_token is NOT expired 
+            console.log('access_token is still valid');
         }
       }
     };
