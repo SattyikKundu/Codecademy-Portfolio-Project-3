@@ -16,7 +16,6 @@ const SearchBar = ({onSearch}) => {
         setSubmitClicked(!submitClicked); // toggles 'submitClicked' value
     }
 
-
     // Get search results after submitting input
     useEffect(() =>{
 
