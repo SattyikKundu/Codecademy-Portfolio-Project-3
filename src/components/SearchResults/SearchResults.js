@@ -14,7 +14,6 @@ const SearchResults = ({searchResults}) => {
             <div className="search-Results-Display">
                 <TrackList 
                     searchResults={searchResults} 
-
                 />
             </div>
         </div>
