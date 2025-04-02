@@ -90,10 +90,16 @@ const App = () => {
       <h1>Spotify PlayList Maker</h1>
 
       <div className="App">
-        <SearchBar onSearch={setSearchInput} />
+        <SearchBar 
+        //onSearch={setSearchInput} 
+        onSearch={setSearchResults} 
+        />
         <p>Submitted input is: {searchInput}</p>
         <div className="App-playlist">
-          <SearchResults />
+          <SearchResults 
+            fromResults={searchResults}
+            forPlaylist={setPlaylist}
+          />
           <PlayList />
         </div>
       </div>

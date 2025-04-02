@@ -6,14 +6,14 @@ const SearchBar = ({onSearch}) => {
 
     const [onTypeInput, setOnTypeInput] = useState(''); // stores input value as it's being typed
     const [submitClicked, setSubmitClicked] = useState(false); // toggles when submit is clicked
-    const [searchResults, setSearchResults] = useState([]); // stores searchResults for checking
+    const [searchOutput, setSearchOutput] = useState([]); // stores searchResults for checking
 
     const typeSearch = (event) => { // used to track and show text as its typed in search box
         setOnTypeInput(event.target.value);
     }
 
     const submitSearch = () => { // On click, submitted input sent back to <App/>
-        onSearch(onTypeInput);
+        onSearch(searchOutput); // sets and stores searchResults in App.js
         setSubmitClicked(prev => !prev); // toggles 'submitClicked' value
     }
 
@@ -40,7 +40,7 @@ const SearchBar = ({onSearch}) => {
             }
             else {
                 console.log('Data Output WITHOUT error: ', searchResultsData);
-                setSearchResults(searchResultsData);
+                setSearchOutput(searchResultsData);
             }
         }
 
