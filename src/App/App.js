@@ -21,6 +21,10 @@ const App = () => {
   const [searchResults, setSearchResults] = useState([]); // Tracks search result array after submitting search box
   const [playList, setPlaylist] = useState([]); // Tracks user choices for which tracks join playlist
 
+  // function to add track from 'searchResults' to 'playList'
+
+
+
   useEffect(() => {// checks for Authentication AS SOON AS App mounts
 
     const authenticateApp = async () => { // Checks if these authentication values are in localStorage (see Spotify.js to learn more)
@@ -97,8 +101,8 @@ const App = () => {
         <p>Submitted input is: {searchInput}</p>
         <div className="App-playlist">
           <SearchResults 
-            fromResults={searchResults}
-            forPlaylist={setPlaylist}
+            searchResults={searchResults}
+            //setPlaylist={setPlaylist}
           />
           <PlayList />
         </div>
