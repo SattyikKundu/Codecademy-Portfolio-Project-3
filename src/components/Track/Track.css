@@ -1,0 +1,34 @@
+.Track {
+    width: calc(100% - 3px);
+    min-height: 100px;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: 6px 0px;
+    background-color: white;
+}
+
+.Track-Info  {
+    margin-top: 0px;
+    font-family: 'Work Sans';
+}
+
+.Track-Info h3 {
+    font-size: 0.7rem;
+}
+
+.Track-Info .dscrpt-text {
+    font-size: 0.6rem;
+}
+
+.Track-img {
+    height: 80px;
+    width: 80px;
+    margin: auto 10px;
+    border-radius: 5px;
+
+    /*margin-bottom: 3px;
+    //margin-right: 12px; */
+    /* margin-left: -20px; */
+}

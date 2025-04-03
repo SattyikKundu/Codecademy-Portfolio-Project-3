@@ -17,6 +17,41 @@ const SearchBar = ({onSearch}) => {
         setSubmitClicked(prev => !prev); // toggles 'submitClicked' value
     }
 
+    const formatData = (data) => { 
+        /* Function ensures that output is formatted properly before storing. This helps 
+           ensure that all parameter values will be passed properly to other components. */
+
+        if (data && data.tracks.items) {
+
+            const formattedTracks = data.tracks.items.map(track => {
+                
+                const artistNames = track.artists.map(artist => artist.name); // Extract artist names
+
+                let formattedArtists; // Format based on # of artists 
+                if(artistNames.length === 1){
+                    formattedArtists = `'${artistNames[0]}'`;
+                } 
+                else if (artistNames.length === 2) {
+                    formattedArtists = `'${artistNames[0]}' & '${artistNames[1]}'`;
+                }
+                else {
+                    formattedArtists = `'${artistNames[0]}', '${artistNames[1]}', etc.`;
+                }
+                
+                return {
+                    id: track.id,
+                    name: track.name,
+                    artist: formattedArtists,
+                    album: track.album.name,
+                    imageUrl: track.album.images[0]?.url || '', //handles case where there's no image
+                    previewUrl: track.previewUrl,
+                    uri: track.uri,
+                }
+        });
+        return formattedTracks;
+        }            
+    }
+
     // Get search results after submitting input
     useEffect(() =>{
 
@@ -40,7 +75,7 @@ const SearchBar = ({onSearch}) => {
             }
             else {
                 console.log('Data Output WITHOUT error: ', searchResultsData);
-                setSearchOutput(searchResultsData);
+                setSearchOutput(formatData(searchResultsData));
             }
         }
 

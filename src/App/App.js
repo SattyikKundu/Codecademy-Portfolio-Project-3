@@ -98,7 +98,6 @@ const App = () => {
         //onSearch={setSearchInput} 
         onSearch={setSearchResults} 
         />
-        <p>Submitted input is: {searchInput}</p>
         <div className="App-playlist">
           <SearchResults 
             searchResults={searchResults}

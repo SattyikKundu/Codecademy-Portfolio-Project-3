@@ -11,7 +11,7 @@ const SearchResults = ({searchResults}) => {
         <div className="Search-Results">
             <h2> Results </h2>
             {/* Add more later */}
-            <div className="search-Results-Display">
+            <div className="Search-Results-Display">
                 <TrackList 
                     searchResults={searchResults} 
                 />
@@ -22,3 +22,5 @@ const SearchResults = ({searchResults}) => {
 
 export default SearchResults;
 
+
+ 
