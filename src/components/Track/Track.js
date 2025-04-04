@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import './Track.css';
 
 
-const Track = ({track}) => {
+const Track = ({track, addToPlayList}) => {
 
 
 
@@ -19,7 +19,10 @@ const Track = ({track}) => {
                 <div className="description"><strong>Album:</strong> {track.album}</div>
                 {/* <div className="description"><strong>key:</strong> {track.id}</div> */}
             </div>
-            <div className="add-to-playlist">
+            <div 
+                className="add-to-playlist"
+                onClick={() => addToPlayList(track.id)}
+                >
                 +
             </div>
         </div>

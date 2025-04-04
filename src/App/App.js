@@ -101,8 +101,10 @@ const App = () => {
         />
         <div className="App-playlist">
           <SearchResults 
-            searchResults={searchResults}
-            setPlaylist={setPlaylist}
+            searchResults   = {searchResults}
+            setSearchResults= {setSearchResults}
+            playList        = {playList}
+            setPlaylist     = {setPlaylist}
           />
           <PlayList />
         </div>
