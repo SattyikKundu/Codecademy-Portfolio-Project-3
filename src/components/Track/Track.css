@@ -3,22 +3,24 @@
     min-height: 100px;
     display: flex;
     flex-direction: row;
-    border: 1px solid black;
-    border-radius: 15px;
+    /*border: 1px solid black; 
+    border-radius: 15px; */
+    border-bottom: solid 0.1px rgb(165, 165, 121);
     margin: 6px 0px;
-    background-color: white;
+    background-color: transparent; /*white; /**/
 }
 
 .Track-Info  {
     margin-top: 0px;
     font-family: 'Work Sans';
+    
 }
 
 .Track-Info h3 {
     font-size: 0.7rem;
 }
 
-.Track-Info .dscrpt-text {
+.Track-Info .description {
     font-size: 0.6rem;
 }
 
@@ -27,8 +29,4 @@
     width: 80px;
     margin: auto 10px;
     border-radius: 5px;
-
-    /*margin-bottom: 3px;
-    //margin-right: 12px; */
-    /* margin-left: -20px; */
 }

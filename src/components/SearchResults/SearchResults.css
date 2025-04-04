@@ -38,11 +38,11 @@
     /*border-radius: 10px;       /* Rounded corners for scrollbar track */
 }
 .Search-Results-Display::-webkit-scrollbar-thumb {
-    background: #2f3061;        /* Dark color for actual thumb (aka 'horizontal scroller') contrast */
+    background: rgb(211, 128, 72);        /* Dark color for actual thumb (aka 'horizontal scroller') contrast */
     width: 10px;
     border-radius: 10px;          /* Rounded corners for thumb */
-    border: 1px solid #e0e0e0;  /* Adds some space and contrast between thumb and track */
+    border: 1px solid #b8b8b8;  /* Adds some space and contrast between thumb and track */
 }
 .Search-Results-Display::-webkit-scrollbar-thumb:hover {
-    background: rgba(47, 48, 97, 80%); /* Thumb's color lightens on hover just like all buttons */
+    background: rgb(179, 107, 59); /* Thumb's color lightens on hover just like all buttons */
 }

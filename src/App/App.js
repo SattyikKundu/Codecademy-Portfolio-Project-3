@@ -53,14 +53,14 @@ const App = () => {
           await Spotify.getToken(code); // generate and save new access_token, refresh_token,
                                           // and expiration_time to localStorage
 
-          //window.history.replaceState({}, document.title, "/"); // Scrubs 'code' param data from url
+          window.history.replaceState({}, document.title, "/"); // Scrubs 'code' param data from url
 
-          //accessToken = localStorage.getItem("access_token"); // checks if access_token is in storage
-          //refreshToken = localStorage.getItem("refresh_token"); // checks if refresh_token is in storage
-          //expirationTime = localStorage.getItem("expiration_time"); // check if access_token is expired (if exists)
-          //console.log("(c)Access token:  ", accessToken); // Check new values in local Storage
-          //console.log("(c)Refresh token: ", refreshToken);
-          //console.log(`(c)Current time:${Date.now()} | ExpirationTime:${expirationTime}`);
+          accessToken = localStorage.getItem("access_token"); // checks if access_token is in storage
+          refreshToken = localStorage.getItem("refresh_token"); // checks if refresh_token is in storage
+          expirationTime = localStorage.getItem("expiration_time"); // check if access_token is expired (if exists)
+          console.log("(c)Access token:  ", accessToken); // Check new values in local Storage
+          console.log("(c)Refresh token: ", refreshToken);
+          console.log(`(c)Current time:${Date.now()} | ExpirationTime:${expirationTime}`);
 
         } else { // There's no tokens nor 'code' available. Reauthenticate
             console.log('No tokens nor "code", need to reauthenticate');
@@ -75,8 +75,9 @@ const App = () => {
 
         if(Spotify.isTokenExpired()){ // if authentucate token expired, reauthenticate
             console.log('access (& refresh) token exist, but is expired');
-            localStorage.clear(); // clear local storage of params
-            Spotify.redirectToSpotifyAuth(); // reauthenticate (later replace with refreshToken() command!)
+            await Spotify.refreshToken();
+            //localStorage.clear(); // clear local storage of params
+            //Spotify.redirectToSpotifyAuth(); // reauthenticate (later replace with refreshToken() command!)
         }
         else{ // access_token is NOT expired 
             console.log('access_token is still valid');
