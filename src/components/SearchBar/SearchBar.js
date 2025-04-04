@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './SearchBar.css';
 import Spotify from '../util/Spotify';
 
-const SearchBar = ({onSearch}) => {
+const SearchBar = ({setSearchResults}) => {
 
     const [onTypeInput, setOnTypeInput] = useState(''); // stores input value as it's being typed
     const [submitClicked, setSubmitClicked] = useState(false); // toggles when submit is clicked
@@ -13,7 +13,7 @@ const SearchBar = ({onSearch}) => {
     }
 
     const submitSearch = () => { // On click, submitted input sent back to <App/>
-        onSearch(searchOutput); // sets and stores searchResults in App.js
+        setSearchResults(searchOutput); // sets and stores searchResults in App.js
         setSubmitClicked(prev => !prev); // toggles 'submitClicked' value
     }
 
@@ -27,7 +27,7 @@ const SearchBar = ({onSearch}) => {
                 
                 const artistNames = track.artists.map(artist => artist.name); // Extract artist names
 
-                let formattedArtists; // Format based on # of artists 
+                let formattedArtists; // Format names of artists based on # of artists 
                 if(artistNames.length === 1){
                     formattedArtists = `'${artistNames[0]}'`;
                 } 
@@ -44,7 +44,7 @@ const SearchBar = ({onSearch}) => {
                     artist: formattedArtists,
                     album: track.album.name,
                     imageUrl: track.album.images[0]?.url || '', //handles case where there's no image
-                    previewUrl: track.previewUrl,
+                    //previewUrl: track.previewUrl,
                     uri: track.uri,
                 }
         });

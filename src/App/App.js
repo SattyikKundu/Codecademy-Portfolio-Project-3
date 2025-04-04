@@ -97,12 +97,12 @@ const App = () => {
       <div className="App">
         <SearchBar 
         //onSearch={setSearchInput} 
-        onSearch={setSearchResults} 
+        setSearchResults={setSearchResults} 
         />
         <div className="App-playlist">
           <SearchResults 
             searchResults={searchResults}
-            //setPlaylist={setPlaylist}
+            setPlaylist={setPlaylist}
           />
           <PlayList />
         </div>

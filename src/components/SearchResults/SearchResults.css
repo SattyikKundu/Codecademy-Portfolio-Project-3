@@ -20,7 +20,10 @@
     font-size: 1.55rem; 
 
     margin-top: 0;  /* position header to top of container (but ealier padding prevents h2 from touching edges)*/
+    margin-bottom: 0;
+    padding-bottom:2px;
     border-bottom: 2px solid rgba(75, 75, 75, 0.61);   /* bottom borderline to visual separation */
+
 }
 
 .Search-Results-Display {
@@ -38,11 +41,12 @@
     /*border-radius: 10px;       /* Rounded corners for scrollbar track */
 }
 .Search-Results-Display::-webkit-scrollbar-thumb {
-    background: rgb(211, 128, 72);        /* Dark color for actual thumb (aka 'horizontal scroller') contrast */
+    background: rgb(167, 167, 167);/*rgb(117, 116, 110);        /* Dark color for actual thumb (aka 'horizontal scroller') contrast */
     width: 10px;
     border-radius: 10px;          /* Rounded corners for thumb */
-    border: 1px solid #b8b8b8;  /* Adds some space and contrast between thumb and track */
+    border: 1px solid rgb(92, 92, 92);/*#b8b8b8;  /* Adds some space and contrast between thumb and track */
 }
 .Search-Results-Display::-webkit-scrollbar-thumb:hover {
-    background: rgb(179, 107, 59); /* Thumb's color lightens on hover just like all buttons */
+    background: rgb(144, 110, 199); /* Thumb's color lightens on hover just like all buttons */
+    border: 1px solid rgb(97, 71, 138);
 }

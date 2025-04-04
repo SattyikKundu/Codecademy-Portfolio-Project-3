@@ -4,9 +4,7 @@ import Track from '../Track/Track';
 
 import './SearchResults.css';
 
-//const SearchResults = ({searchResults, setPlaylist}) => {
-
-const SearchResults = ({searchResults}) => {
+const SearchResults = ({searchResults, setPlaylist}) => {
 
     return(
         <div className="Search-Results">
@@ -15,7 +13,13 @@ const SearchResults = ({searchResults}) => {
               { 
               (!searchResults || searchResults.length===0)
               ? (<p>Enter and Submit your Search!</p>)
-              : (searchResults.map((track) => (<Track key={track.id} track={track}/> )))
+              : (searchResults.map((track) => (
+              <Track 
+                key={track.id} 
+                track={track}
+                //setPlaylist={setPlaylist}
+                /> 
+                )))
               }
             </div>
         </div>
