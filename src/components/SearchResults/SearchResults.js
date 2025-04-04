@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import TrackList from '../Tracklist/Tracklist.js';
+//import TrackList from '../Tracklist/Tracklist.js';
+import Track from '../Track/Track';
 
 import './SearchResults.css';
 
@@ -10,11 +11,12 @@ const SearchResults = ({searchResults}) => {
     return(
         <div className="Search-Results">
             <h2> Results </h2>
-            {/* Add more later */}
             <div className="Search-Results-Display">
-                <TrackList 
-                    searchResults={searchResults} 
-                />
+              { 
+              (!searchResults || searchResults.length===0)
+              ? (<p>Enter and Submit your Search!</p>)
+              : (searchResults.map((track) => (<Track key={track.id} track={track}/> )))
+              }
             </div>
         </div>
     );
