@@ -1,128 +1,116 @@
 .Track {
-    width: calc(100% - 3px);
-    min-height: 100px;
-    display: flex;
-    flex-direction: row;
-    /*border: 1px solid black; 
-    border-radius: 15px; */
+    width: calc(100% - 3px);    /* Matches parent container, except 3px 
+                                   on right to prevent button from touching scroll bar */
 
+    min-height: 100px;          /* Min height for each track shown */
 
-    /*justify-content: space-between; /* NEW: Distributes space between children */
-    /*align-items: center;           /* NEW: Vertically centers all children */
-    /*padding: 5px;                   /* NEW: Adds padding for better spacing */
+    display: flex;              /* Nested items (image, description, button) 
+                                    displayed horizontally in flex display*/
+    flex-direction: row;   
 
-    border-bottom: solid 0.1px rgb(165, 165, 121);
-    margin: 6px 0px;
-    background-color: transparent; /*white; /**/
+    border-bottom: solid 0.1px #a5a579;  /* Bottom border to visually separate from other tracks */
+    margin: 6px 0px;                       /* Top and bottom padding between tracks */
+    background-color: transparent;         /* Track body matches parent <div> color */
 }
 
 .Track-Info  {
-    margin-top: 0px;
-    font-family: 'Work Sans';
+    margin-top: 0px;           
+    font-family: 'Work Sans';  /* Default text font for nested divs in .Track-Info  */
+    flex-grow: 1;              /* Expands to take available space since parent is flex object */
 
-
-    flex-grow: 1;                          /* NEW: Expands to take available space */
     /*overflow: hidden;                      /* NEW: Prevents text overflow */
     /*text-overflow: ellipsis;               /* NEW: Adds '...' for overflowed text */
     /*white-space: nowrap;                   /* NEW: Prevents text from wrapping */
-    
 }
 
 .Track-Info h3 {
-    font-size: 0.7rem;
+    font-size: 0.7rem;      /* Font-size for track title in <Track> object*/
 }
 
 .Track-Info .description {
-    font-size: 0.6rem;
+    font-size: 0.6rem;      /* Font-size for track description elements (artist(s) & album name) */
 }
 
-.Track-img {
+.Track-img {                /* Styling for track image displayed for each track */
     height: 80px;
     width: 80px;
-    margin: auto 10px;
-    border-radius: 5px;
-
-    flex-shrink: 0;         /* NEW: Prevents image from shrinking when resizing */
+    margin: auto 10px;      /* Vertically centered with side paddings */
+    border-radius: 5px;     /* Rounded image corners for visuals*/
+    flex-shrink: 0;         /* Prevents image from shrinking when resizing */
 }
+
 
 /* Styling for button depending on what function is active */
 
-.add-to-playlist {
-    /*
-    float: right;
-    margin-top: 0;
-    margin-right: 0;
-    display: flex;
-    font: 1rem; */
+.add-to-playlist { /* Styling for add('+') button in <SearchResults? component */
 
-    margin: auto 0;
-    margin-right: 1rem;
+    margin: auto 0;       /* Vertically centers button */      
+    margin-right: 1rem;   /* Keeps button spaced from vertical scroll */
 
     display: flex;
-    align-items: center;                   /* NEW: Vertically centers the '+' */
-    justify-content: center;               /* NEW: Horizontally centers the '+' */
-    font-size: 3.3rem;                     /* NEW: Increases size of the '+' */
-    color: rgb(37, 37, 37); /*beige;               /* NEW: Adds green color */
-    background-color: #919191; /*rgb(59, 165, 100); /*rgb(150, 149, 149);/*rgb(116, 100, 57); /**/
-    cursor: pointer;                       /* NEW: Makes the '+' clickable */
-    flex-shrink: 0;                        /* NEW: Prevents resizing */
-    width: 42px;                           /* NEW: Sets width */
-    height: 42px;                          /* NEW: Sets height */
-    border-radius: 50%; /*50%;                    /* NEW: Makes it a rounded square/// circle */
-    border: 1px solid rgb(63, 63, 63);/*rgb(116, 100, 57);/*#4CAF50;             /* NEW: Adds a border */
-    transition: all 0.15s;                  /* NEW: Adds smooth transition for hover */
+    align-items: center;                 /* Vertically centers plus('+') sign, NOT circle background */
+    justify-content: center;             /* Horizontally centers plus('+') sign, NOT circle background */
+    font-size: 3.3rem;                   /* Font-size of the plus('+') sign */
+    color: beige;                      /* Plus sign color */
+    background-color: rgb(77, 77, 77); /* Background color fo button */
+    cursor: pointer;                     /* Cursor becomes pointer on hover over button */
+    flex-shrink: 0;                      /* Prevents button resizing (keeps button shape) */
+    width: 2.2rem;/*42px;                /* Button width */
+    height: 2.2rem;/*42px;               /* Button height */
+    border-radius: 50%;                  /* Makes button in rounded circle shape */
+    border: 3px solid rgb(119, 119, 119); /* Button border */
+    transition: all 0.15s;               /* Adds smooth transition for hover for visuals */
 }
 
-/* NEW: Hover Effect */
-.add-to-playlist:hover {
-    background-color: rgb(59, 165, 100);/*#4CAF50;*/
-    color: beige;
-    border: 1px solid rgb(59, 165, 100);/*#4CAF50;*/
+.add-to-playlist:hover {  /* Styling when hovering over button */
+    background-color: rgb(59, 165, 100);
+    color: rgb(39, 39, 39);/*beige;*/
+    border: 3px solid rgb(41, 117, 70);
 }
 
-.add-to-playlist:active {
-    background-color: rgb(46, 141, 83);/*#2e7d32;*/
-    transform: scale(0.90);
-    border: 1px solid rgb(46, 141, 83);
+.add-to-playlist:active { /* Styling pressing down button */
+    background-color: rgb(41, 117, 70);
+    color: beige; /*rgb(39, 39, 39);*/
+    transform: scale(0.90); /* Button slightly shrinks on press for visuals */
 }
+
 
 /** Style for 'drop-from-playList' button **/
 
 .drop-from-playlist {
-    /*
-    float: right;
-    margin-top: 0;
-    margin-right: 0;
-    display: flex;
-    font: 1rem; */
 
-    margin: auto 0;
-    margin-right: 1rem;
+    margin: auto 0;       /* Vertically centers button */      
+    margin-right: 1rem;   /* Keeps button spaced from vertical scroll */
 
     display: flex;
-    align-items: center;                   /* NEW: Vertically centers the '+' */
-    justify-content: center;               /* NEW: Horizontally centers the '+' */
-    font-size: 3.3rem;                     /* NEW: Increases size of the '+' */
-    color: rgb(37, 37, 37); /*beige;               /* NEW: Adds green color */
-    background-color: #919191; /*rgb(59, 165, 100); /*rgb(150, 149, 149);/*rgb(116, 100, 57); /**/
-    cursor: pointer;                       /* NEW: Makes the '+' clickable */
-    flex-shrink: 0;                        /* NEW: Prevents resizing */
-    width: 42px;                           /* NEW: Sets width */
-    height: 42px;                          /* NEW: Sets height */
-    border-radius: 10%; /*50%;                    /* NEW: Makes it a rounded square/// circle */
-    border: 1px solid rgb(63, 63, 63);/*rgb(116, 100, 57);/*#4CAF50;             /* NEW: Adds a border */
+    align-items:center;                 /* Vertically centers plus('-') sign, NOT square background */
+    justify-content: center;             /* Horizontally centers plus('-') sign, NOT square background */
+    font-size: 3.3rem;                   /* Font-size of the plus('-') sign */
+    color: beige;                      /* Plus sign color */
+    background-color: rgb(77, 77, 77); /* Background color for button */
+    cursor: pointer;                     /* Cursor becomes pointer on hover over button */
+    flex-shrink: 0;                      /* Prevents button resizing (keeps button shape) */
+    width: 2.2rem;/*42px;                /* Button width */
+    height: 2.2rem;/*42px;               /* Button height */
+    border-radius: 10%;                  /* Makes button into square with rounded corners */
+    border: 3px solid rgb(119, 119, 119); /* Button border */
     transition: all 0.15s;                  /* NEW: Adds smooth transition for hover */
 }
 
-/* NEW: Hover Effect */
-.drop-from-playlist:hover {
-    background-color: rgb(59, 165, 100);/*#4CAF50;*/
-    color: beige;
-    border: 1px solid rgb(59, 165, 100);/*#4CAF50;*/
+.drop-from-playlist span { /* Due to minus('-') not being completely vertically centered, 
+                              translateY() is used to move the minus up until centered in button */ 
+    transform: translateY(-0.2465rem);
+    /*height: 3rem; */
 }
 
-.drop-from-playlist:active {
-    background-color: rgb(46, 141, 83);/*#2e7d32;*/
-    transform: scale(0.90);
-    border: 1px solid rgb(46, 141, 83);
+.drop-from-playlist:hover { /* Styling when hovering over button */
+    background-color: rgb(224, 88, 88);
+    color:  rgb(39, 39, 39);/*beige;*/
+    border: 3px solid rgb(170, 58, 58);
+}
+
+.drop-from-playlist:active { /* Styling pressing down button */
+    background-color: rgb(170, 58, 58);
+    color: beige; /*rgb(39, 39, 39);*/
+    transform: scale(0.90); /* Button slightly shrinks on press for visuals */
 }

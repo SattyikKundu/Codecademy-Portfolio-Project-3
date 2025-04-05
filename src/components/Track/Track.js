@@ -34,7 +34,7 @@ const Track = ({track, addToPlayList, removeTrack}) => {
             </div>
                 {(addToPlayList) 
                 ?(<div className='add-to-playlist' onClick={() => addToPlayList(track.id)}>+</div>)
-                :(<div className='drop-from-playlist' onClick={() => removeTrack(track.id)}>-</div>)}
+                :(<div className='drop-from-playlist' onClick={() => removeTrack(track.id)}><span>-</span></div>)}
         </div>
     );
 }
