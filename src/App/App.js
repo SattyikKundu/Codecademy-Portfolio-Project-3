@@ -106,7 +106,10 @@ const App = () => {
             playList        = {playList}
             setPlaylist     = {setPlaylist}
           />
-          <PlayList />
+          <PlayList 
+            playList    = {playList}
+            setPlaylist = {setPlaylist}
+          /> 
         </div>
       </div>
     </div>

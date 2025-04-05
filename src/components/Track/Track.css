@@ -45,6 +45,8 @@
     flex-shrink: 0;         /* NEW: Prevents image from shrinking when resizing */
 }
 
+/* Styling for button depending on what function is active */
+
 .add-to-playlist {
     /*
     float: right;
@@ -79,6 +81,47 @@
 }
 
 .add-to-playlist:active {
+    background-color: rgb(46, 141, 83);/*#2e7d32;*/
+    transform: scale(0.90);
+    border: 1px solid rgb(46, 141, 83);
+}
+
+/** Style for 'drop-from-playList' button **/
+
+.drop-from-playlist {
+    /*
+    float: right;
+    margin-top: 0;
+    margin-right: 0;
+    display: flex;
+    font: 1rem; */
+
+    margin: auto 0;
+    margin-right: 1rem;
+
+    display: flex;
+    align-items: center;                   /* NEW: Vertically centers the '+' */
+    justify-content: center;               /* NEW: Horizontally centers the '+' */
+    font-size: 3.3rem;                     /* NEW: Increases size of the '+' */
+    color: rgb(37, 37, 37); /*beige;               /* NEW: Adds green color */
+    background-color: #919191; /*rgb(59, 165, 100); /*rgb(150, 149, 149);/*rgb(116, 100, 57); /**/
+    cursor: pointer;                       /* NEW: Makes the '+' clickable */
+    flex-shrink: 0;                        /* NEW: Prevents resizing */
+    width: 42px;                           /* NEW: Sets width */
+    height: 42px;                          /* NEW: Sets height */
+    border-radius: 10%; /*50%;                    /* NEW: Makes it a rounded square/// circle */
+    border: 1px solid rgb(63, 63, 63);/*rgb(116, 100, 57);/*#4CAF50;             /* NEW: Adds a border */
+    transition: all 0.15s;                  /* NEW: Adds smooth transition for hover */
+}
+
+/* NEW: Hover Effect */
+.drop-from-playlist:hover {
+    background-color: rgb(59, 165, 100);/*#4CAF50;*/
+    color: beige;
+    border: 1px solid rgb(59, 165, 100);/*#4CAF50;*/
+}
+
+.drop-from-playlist:active {
     background-color: rgb(46, 141, 83);/*#2e7d32;*/
     transform: scale(0.90);
     border: 1px solid rgb(46, 141, 83);

@@ -2,8 +2,21 @@ import { useState, useEffect } from "react";
 import './Track.css';
 
 
-const Track = ({track, addToPlayList}) => {
+const Track = ({track, addToPlayList, removeTrack}) => {
 
+
+    /*
+    const handleClick = (trackId) => {
+        if (addToPlayList) {
+            addToPlayList(trackId);
+        }
+        else if (removeTrack) {
+            removeTrack(trackId);
+        } else{
+            console.log('Neither addToPlayList() nor removeTrack() are available!');
+            return;
+        }
+    } */
 
 
     return(
@@ -19,12 +32,9 @@ const Track = ({track, addToPlayList}) => {
                 <div className="description"><strong>Album:</strong> {track.album}</div>
                 {/* <div className="description"><strong>key:</strong> {track.id}</div> */}
             </div>
-            <div 
-                className="add-to-playlist"
-                onClick={() => addToPlayList(track.id)}
-                >
-                +
-            </div>
+                {(addToPlayList) 
+                ?(<div className='add-to-playlist' onClick={() => addToPlayList(track.id)}>+</div>)
+                :(<div className='drop-from-playlist' onClick={() => removeTrack(track.id)}>-</div>)}
         </div>
     );
 }

@@ -32,3 +32,33 @@
     color: transparent; /* Removes placeholder when user focuses/clicks into textbox */
   
 }
+
+/* Playlist Display area (similar to that of SearchResults) */
+
+.PlayList-Display {
+    width: 100%;
+    background-color: beige;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.PlayList-Display::-webkit-scrollbar {
+    width: 8px;   /* Controls scroll bar's thickness */
+}
+
+.PlayList-Display::-webkit-scrollbar-track {
+    background-color: transparent;/*#e0e0e0;   /* Scroll track's background color is light-gray */
+    /*border-radius: 10px;       /* Rounded corners for scrollbar track */
+}
+
+.PlayList-Display::-webkit-scrollbar-thumb {
+    background: rgb(167, 167, 167);/*rgb(117, 116, 110);        /* Dark color for actual thumb (aka 'horizontal scroller') contrast */
+    width: 10px;
+    border-radius: 10px;          /* Rounded corners for thumb */
+    border: 1px solid rgb(92, 92, 92);/*#b8b8b8;  /* Adds some space and contrast between thumb and track */
+}
+
+.PlayList-Display::-webkit-scrollbar-thumb:hover {
+    background: rgb(144, 110, 199); /* Thumb's color lightens on hover just like all buttons */
+    border: 1px solid rgb(97, 71, 138);
+} 
