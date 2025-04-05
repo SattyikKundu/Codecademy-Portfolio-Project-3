@@ -15,9 +15,9 @@ h1 {
     padding-bottom: 3rem;   /* Prevents bottom of container from touching viewport */
 }
 
-.App-playlist {         /* This <div> contains <SearchResults/> and <Tracklist/> component/features */
-    display: flex;      /* implements flex layout */ 
-    width: 100%;        /* width matches parent container's */
+.SearchOutput-and-Playlist {  /* This <div> contains <SearchResults/> and <Tracklist/> component/features */
+    display: flex;           /* implements flex layout */ 
+    width: 100%;             /* width matches parent container's */
     flex-direction: row;            /* Puts child containers side-to-side in flex layout */    
     justify-content: space-around;  /* Puts space/padding 'equally' around each child container */
 }

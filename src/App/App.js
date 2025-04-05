@@ -19,7 +19,8 @@ const App = () => {
   //const [tokenExpires,  setTokenExpires]  = useState(null); // Tracks expiration time of access token
 
   const [searchResults, setSearchResults] = useState([]); // Tracks search result array after submitting search box
-  const [playList, setPlaylist] = useState([]); // Tracks user choices for which tracks join playlist
+  const [playList, setPlaylist]           = useState([]); // Tracks user choices for which tracks join playlist
+  //const [playListName, setPlaylistName]   = useState('');
 
   // function to add track from 'searchResults' to 'playList'
 
@@ -99,7 +100,7 @@ const App = () => {
         //onSearch={setSearchInput} 
         setSearchResults={setSearchResults} 
         />
-        <div className="App-playlist">
+        <div className="SearchOutput-and-Playlist">
           <SearchResults 
             searchResults   = {searchResults}
             setSearchResults= {setSearchResults}
@@ -109,6 +110,7 @@ const App = () => {
           <PlayList 
             playList    = {playList}
             setPlaylist = {setPlaylist}
+            //setPlaylistName = {setPlaylistName}
           /> 
         </div>
       </div>
