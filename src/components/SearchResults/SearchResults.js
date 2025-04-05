@@ -10,11 +10,17 @@ const SearchResults = ({searchResults, setSearchResults, playList, setPlaylist})
 
         const searchCopy = [...searchResults];  // get shallow copy of searchResults array
 
-        // .find() returns track object that matches Id
-        const trackToAdd = searchCopy.find((track) => {track.id === trackId});
+        // .find() returns track object that matches Id (note: don't use {} since it 
+        // requires an explicit return(this caused the <Track> list below to crash earlier.))
+        const trackToAdd = searchCopy.find((track) => track.id === trackId);
+
+        if(!trackToAdd) { // Prevents app from trying to access track that doesn't exist (to avoid crash)
+          console.log("There's no track to add");
+          return;
+        }
 
         // .filter() returns array of tracks that DON'T match Id input
-        const newSearch = searchCopy.filter((track) => { track.id !== trackId});
+        const newSearch = searchCopy.filter((track) => track.id !== trackId);
 
         setSearchResults(newSearch); // sets new Search Result without the track
         setPlaylist([...playList,trackToAdd]); // sets new Play List with new added track
