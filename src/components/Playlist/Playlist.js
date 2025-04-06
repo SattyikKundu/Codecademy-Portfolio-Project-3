@@ -44,9 +44,10 @@ const PlayList = ({playList, setPlaylist}) => {
             <div className='button-space'>
                 {/* (INCOMPLETE) Playlist submission button appears under certain conditions */}
                 {
-                    (playList.length >0)
-                    ? <div className='submit-button'>Submit Playlist</div>
-                    : none
+                    (playList && playList.length > 0)
+                    ? <div className='submit-button'>SUBMIT Playlist</div>
+                    : null
+                    
                 }
             </div>
         </div>
