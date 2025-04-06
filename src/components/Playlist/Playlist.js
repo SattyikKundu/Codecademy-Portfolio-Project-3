@@ -1,8 +1,7 @@
-import Track from '../Track/Track';
-import './Playlist.css'; // styling
-import '../util/Spotify.js';
 import { useState } from 'react';
+import Track from '../Track/Track';
 import Spotify from '../util/Spotify.js';
+import './Playlist.css'; 
 
 
 const PlayList = ({playList, setPlaylist}) => {
@@ -27,14 +26,11 @@ const PlayList = ({playList, setPlaylist}) => {
     return (
         <div class="Playlist">
             <input 
+                // Updated playListName as user types
                 placeholder='Enter New Playlist Name...' 
                 value={playListName}
                 onChange={(event) => updateName(event)}    
             />
-            
-            <p>Curr playlist name is: {playListName}</p>
-
-
             <div className="PlayList-Display">
               {/* .map() used to display all current tracks in Playlist */}
               { 
@@ -51,10 +47,11 @@ const PlayList = ({playList, setPlaylist}) => {
             </div>
             <div className='button-space'>
                 {
-                    (playList && playList.length > 0)
+                    /* Button shows only if playList and name exists 
+                       and their lengths are greater than 0. */
+                    (playList && playList.length > 0 && playListName && playListName.length>0)
                     ? <div className='submit-button' onClick={() => submitPlaylist()}>SUBMIT Playlist</div>
-                    : null
-                    
+                    : null          
                 }
             </div>
         </div>

@@ -1,7 +1,4 @@
-import { useState, useEffect } from 'react';
-//import TrackList from '../Tracklist/Tracklist.js';
 import Track from '../Track/Track';
-
 import './SearchResults.css';
 
 const SearchResults = ({searchResults, setSearchResults, playList, setPlaylist}) => {
@@ -14,17 +11,11 @@ const SearchResults = ({searchResults, setSearchResults, playList, setPlaylist})
         // requires an explicit return(this caused the <Track> list below to crash earlier.))
         const trackToAdd = searchCopy.find((track) => track.id === trackId);
 
-        //if(!trackToAdd) { // Prevents app from trying to access track that doesn't exist (to avoid crash)
-        //  console.log("There's no track to add");
-         // return;
-        //}
-
         // .filter() returns array of tracks that DON'T match Id input
         const newSearch = searchCopy.filter((track) => track.id !== trackId);
 
-        setSearchResults(newSearch); // sets new Search Result without the track
+        setSearchResults(newSearch);          // sets new Search Result without the track
         setPlaylist([...playList,trackToAdd]); // sets new Play List with new added track
-        console.log('Playlist is: ',playList);
     }
 
     return(
@@ -32,6 +23,8 @@ const SearchResults = ({searchResults, setSearchResults, playList, setPlaylist})
             <h2> Results </h2>
             <div className="Search-Results-Display">
               { 
+              /* If no search results yet, it prints notice.
+                 Otheriwse, each track is listed via .map() function. */
               (!searchResults || searchResults.length===0)
               ? (<p>Enter and Submit your Search!</p>)
               : (searchResults.map((track) => (
