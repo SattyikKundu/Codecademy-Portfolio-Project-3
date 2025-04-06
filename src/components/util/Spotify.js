@@ -114,7 +114,7 @@ const Spotify = {
 
 
         const body     = await fetch(url, payload); // Send POST request, with payload, to Spotify's token endpoint.
-        const response = await body.json(); // Parses JSON response body to extract access token and other data. 
+        const response = await body.json();         // Parses JSON response body to extract access token and other data. 
 
         if(!response.access_token) { // checks if response has the access_token
             throw new Error('No access token returned!'); // Otherwise, throw error
@@ -261,7 +261,87 @@ const Spotify = {
         else {
             return data;// otherwise return data
         }
+    },
+
+
+    /* Below function takes the playList name, and the tracks' uri
+       and creates a playlist (with tracks) that will be submitted
+       to Spotify user's account. The setPlaylist() function is used to 
+       reset playList variable once submitted */
+    async savePlaylist(playListName, trackUris, setPlaylist) {
+
+        if (!playListName || !uris) { // checks if inputs are provided
+            console.log('Either playlist name or uris is missing');
+            return;
+        }
+
+        const accessToken = localStorage.getItem('access_token'); // get access_token
+
+        /* First fetch profile (to get your profile ID to sent your playlist to)
+           See fetchProfile() from this link:
+           https://developer.spotify.com/documentation/web-api/howtos/web-app-profile
+           Also see link on output of getting user profile:
+           https://developer.spotify.com/documentation/web-api/reference/get-current-users-profile */
+        const result = await fetch(
+            "https://api.spotify.com/v1/me",  // profile url address
+            {
+                method: "GET",
+                headers: {Authorization: `Bearer ${accessToken}`}   
+            });
+
+        const profile = await result.json(); // converts result to json
+        console.log('Returned profile: ',profile);
+        const user_id = profile.id;          // returns user id
+        console.log('Profile Id: ', user_id);
+
+        endPointUrl = `https://api.spotify.com/v1/users/${user_id}/playlists` ; // save 'user_id' into endpoint
+
+        /* Create The New Playlist:
+           See this article for example of request body:
+           https://developer.spotify.com/documentation/web-api/reference/create-playlist */
+        const newPlaylist = await fetch(
+            endPointUrl,
+            {
+                method: "POST",
+                headers: {
+                           Authorization: `Bearer ${accessToken}`, 
+                           'Content-Type': 'application/json'
+                         },
+                body: {
+                        name: playListName,
+                        description: 'New Playlist created through project app.',
+                        public: false
+                      }
+            }
+        );
+        const playlist = await newPlaylist.json();  // convert to json
+        const playlist_id = playlist.id;            // get id of new playlist
+
+        /* Now add your tracks to playlist. See reference for more details:
+           https://developer.spotify.com/documentation/web-api/reference/add-tracks-to-playlist */
+        const addTracksToPlaylist = await fetch(
+            `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`,
+            {
+                method: 'POST',
+                headers: {
+                          Authorization: `Bearer ${accessToken}`, 
+                          'Content-Type': 'application/json'
+                        },
+                data: {
+                    uris: trackUris,
+                    position: 0
+                }
+            }
+        );
+
+        const tracksSent = await addTracksToPlaylist.json();
+        console.log('Tracks sent to new playlist: ',tracksSent);
+
+        setPlaylist([]); // since playlist has been submitted, 'playList' variable can be reset
     }
 }
 
 export default Spotify;
+
+
+
