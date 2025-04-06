@@ -2,14 +2,15 @@ import Track from '../Track/Track';
 import './Playlist.css'; // styling
 import '../util/Spotify.js';
 import { useState } from 'react';
+import Spotify from '../util/Spotify.js';
 
 
 const PlayList = ({playList, setPlaylist}) => {
 
-    const[listName, setListName] = useState(''); // stores name of playlist as user types
+    const[playListName, setPlaylistName] = useState(''); // stores name of playlist as user types
 
     const updateName = (event) => { // function updates playlist name as user types
-        setListName(event.target.value);
+        setPlaylistName(event.target.value);
     }
 
     const removeTrack = (trackId) => {     // function to drop track from current playlist
@@ -18,15 +19,22 @@ const PlayList = ({playList, setPlaylist}) => {
         setPlaylist(newPlaylist);          // save new playlist without dropped track
     }
 
-    //const submitPlaylist(playList) { } // used to submit playlist to Spotify account
+    const submitPlaylist = async () => { // used to submit playlist to Spotify account
+        const trackUris = playList.map((track) => track.uri);
+        await Spotify.savePlaylist(playListName, trackUris, setPlaylist);
+    } 
 
     return (
         <div class="Playlist">
             <input 
                 placeholder='Enter New Playlist Name...' 
-                value={listName}
+                value={playListName}
                 onChange={(event) => updateName(event)}    
             />
+            
+            <p>Curr playlist name is: {playListName}</p>
+
+
             <div className="PlayList-Display">
               {/* .map() used to display all current tracks in Playlist */}
               { 
@@ -42,10 +50,9 @@ const PlayList = ({playList, setPlaylist}) => {
                }
             </div>
             <div className='button-space'>
-                {/* (INCOMPLETE) Playlist submission button appears under certain conditions */}
                 {
                     (playList && playList.length > 0)
-                    ? <div className='submit-button'>SUBMIT Playlist</div>
+                    ? <div className='submit-button' onClick={() => submitPlaylist()}>SUBMIT Playlist</div>
                     : null
                     
                 }

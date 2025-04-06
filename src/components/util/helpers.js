@@ -7,8 +7,7 @@
 /* 1st, create the code_verifier, which is a high-entropy cryptographic 
         random string with 43-128 characters. To better under the below 
         function (and all other below, review this article again: 
-        https://developer.spotify.com/documentation/web-api/tutorials/code-pkce-flow)
- */
+        https://developer.spotify.com/documentation/web-api/tutorials/code-pkce-flow) */
 
 export const generateRandomString = (length) => { // Generate random string for provided length
 
@@ -55,8 +54,7 @@ export const generateRandomString = (length) => { // Generate random string for 
 
 
 /* 2nd, after the code_verfiier is generated using the above function, it needs to be
-   hashed/transformed via SHA256 algorithm. This value then gets sent wihtin the PKCE auth request 
-*/
+   hashed/transformed via SHA256 algorithm. This value then gets sent wihtin the PKCE auth request */
 
 export const sha256 = async (plain) => { // asynchronous function takes plain text as string input
 

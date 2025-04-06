@@ -1,5 +1,4 @@
 /*
-
 PKCE (Proof key for Code Exchange) is recommended authorization 
 flow for most modern mobile app, single-page web apps, or any other applications
 where the client's secret can't be stored safely. In comparison,
@@ -23,12 +22,14 @@ within the above article.
 */
 
 // First, import helper functions essential for the Code challenge generation
-import { generateRandomString, sha256, base64encode, isTokenExpired } from "./helpers";
+import { generateRandomString, sha256, base64encode } from "./helpers";
 
 const clientId = 'f543695a790649369f8a548e31afb691'; // <= Client ID from Spotify developer account's dashboard
-const redirectUri = 'http://localhost:3000'; // <= Where the API data gets sent towards; must match 'redirectUri' configured in Spotify's app dashboard.
+const redirectUri = 'http://localhost:3000'; // <= Where the API data gets sent towards; must match 
+                                             // 'redirectUri' configured in Spotify's app dashboard.
 
 const Spotify = {
+
 
     async redirectToSpotifyAuth() { // PKCE redirect function initiates Spotify authentication request *safely*
 
@@ -50,10 +51,19 @@ const Spotify = {
 
         const authUrl = new URL('https://accounts.spotify.com/authorize'); // New URL object points to authorization endpoint
 
-        const scope = 'user-read-private user-read-email'; // Defines which permission will be requested for app
-        /* Here are the scopes used (see: https://developer.spotify.com/documentation/web-api/concepts/scopes)
-         * 'user-read-private'      read access to user's subscription details
-         * 'user-read-email'        read access to user's email address
+        // Defines which permission will be requested for app
+        const scope = "user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public"; 
+        /* Here are the scopes used (see: https://developer.spotify.com/documentation/web-api/concepts/scopes#list-of-scopes)
+         *
+         * Below 2 permissions are needed when accessing user profile
+         * 'user-read-private'         read access to user's subscription details
+         * 'user-read-email'           read access to user's email address
+         * 
+         *  Below 4 permissions are needed when creating playlists (relevant in later method):
+         * 'playlist-read-private'       read access to user's private playlists
+         * 'playlist-read-collaborative' includes collaborative playlists when requesting a user's playlists.
+         * 'playlist-modify-private'     write access to user's private playlists
+         * 'playlist-modify-public'      write access to user's public playlists
          */
 
 
@@ -91,7 +101,7 @@ const Spotify = {
     async getToken(code) { // Function exchanges authorization code for access token
 
         const codeVerifier = localStorage.getItem('code_verifier'); // Get code_verifier from localStorage
-        const url = "https://accounts.spotify.com/api/token"; // Spotify's token endpoint url — where POST request is sent
+        const url = "https://accounts.spotify.com/api/token";       // Spotify's token endpoint url — where POST request is sent
 
         /* Construct POST request payload to exchange code for access token */
         const payload = {
@@ -112,12 +122,11 @@ const Spotify = {
             }),
         };
 
-
         const body     = await fetch(url, payload); // Send POST request, with payload, to Spotify's token endpoint.
         const response = await body.json();         // Parses JSON response body to extract access token and other data. 
 
-        if(!response.access_token) { // checks if response has the access_token
-            throw new Error('No access token returned!'); // Otherwise, throw error
+        if(!response.access_token) { // checks if response has the access_token or throw error
+            throw new Error('No access token returned!'); 
         }
 
         /* Store access_token into localStorage for use in Spotify API calls.
@@ -134,24 +143,18 @@ const Spotify = {
         const expirationTime = Date.now() + (timeLeftToExpire * 1000);  // Adds remaining time (as milliseconds) to current time
         localStorage.setItem('expiration_time', expirationTime);        // Saves expiration time to localStorage
 
-        //return [response.access_token, response.refresh_token, response.expires_in];
     },
 
     /* Below helper function checks if 'access_token' on localStorage has expired */
     isTokenExpired() {
+
         const expiration_Time = Number(localStorage.getItem('expiration_time')); // returns stored value as number
     
         if(!expiration_Time || isNaN(expiration_Time)) { // checks if expiration_Time is missing or invalid 
             console.log('Expiration time is missing OR not on localStorage.');
             return true; // isExpired() === true 
         } 
-        /*
-        else if (Date.now() < expiration_Time) {
-            return false;
-        }
-        else if (Date.now() >= expiration_Time){
-            return true;
-        } */
+
         return Date.now() > expiration_Time; // If current time past expiration_time, return TRUE, otherwise FALSE;
     },
 
@@ -159,15 +162,13 @@ const Spotify = {
     /* If access_token expires at any time, it needs to be refreshed using a refresh_token.
        This process is executed using the below function. To understand how the code work, read this
        article which explains the code need to refresh the access_token without reauthentication:
-       https://developer.spotify.com/documentation/web-api/tutorials/refreshing-tokens
-    */
-
+       https://developer.spotify.com/documentation/web-api/tutorials/refreshing-tokens */
     async refreshToken() {
 
         const refreshToken = localStorage.getItem('refresh_token');
-        if(!refreshToken) {
-            console.log("Refresh token isn't in storage");
-            return null;
+
+        if(!refreshToken) { // if refresh_token is not in local Storage, 
+            return null;    // return null to end function
         }
 
         const url = "https://accounts.spotify.com/api/token"; // endpoint for getting new access_token
@@ -175,12 +176,13 @@ const Spotify = {
         const payload = { // payload sent to request new access_token
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                // This means we're sending form data in the body (URLSearchParams)
+                'Content-Type': 'application/x-www-form-urlencoded' 
             },
-            body: new URLSearchParams({
-                grant_type: 'refresh_token',
-                refresh_token: refreshToken,
-                client_id: clientId
+            body: new URLSearchParams({      // constructs formatted url-encoded string from object
+                grant_type: 'refresh_token', // request refresh to spotify
+                refresh_token: refreshToken, // our refresh_token from Local Storage, used for refresh request
+                client_id: clientId          // out app's registered clientId
             })
         }
 
@@ -188,27 +190,23 @@ const Spotify = {
             const body = await fetch(url, payload); // new access_token request & response
             const response = await body.json();
 
-            if(response.error && (response.error='invalid_grant')) { // if refresh_token is invalid
-
-                console.log("There's an error with refresh_token during search..");
+            if(response.error && (response.error='invalid_grant')) { // If refresh_token is invalid...
 
                 /* Since refresh and access tokens are invalid, clear local storage and reauthenticate */
                 localStorage.clear();
                 this.redirectToSpotifyAuth();
             } 
-            else{ // otherwise, continue like normal...
-                console.log('(refresh) Response is: ',response);
-                console.log('(refresh) New access_token is: ',response.access_token);
-
+            else{ // otherwise, save new access and refresh tokens in local Stroage
+ 
                 localStorage.setItem('access_token', response.access_token);
                 
-                if (response.refresh_token) { // save new refresh_token is provided
-                localStorage.setItem('refresh_token', response.refresh_token);
+                if (response.refresh_token) { 
+                    localStorage.setItem('refresh_token', response.refresh_token);
                 }
             }
 
         }
-        catch(error) {
+        catch(error) { // error-handing in try-catch block
             console.log('Error caught during refreshToken(): ', error);
         }
     },
@@ -216,8 +214,8 @@ const Spotify = {
     
 
     /* Below function returns Search Results using the input from the Seach Bex.
-       See below article for more details regarding show Spotify search works: 
-       https://developer.spotify.com/documentation/web-api/reference/search
+    See below article for more details regarding show Spotify search works: 
+    https://developer.spotify.com/documentation/web-api/reference/search
     */
     async returnSearchResults(searchInput) { // returns searchResults from seachBox input
 
@@ -232,20 +230,21 @@ const Spotify = {
         
         const accessToken = localStorage.getItem("access_token");
 
-        if (!accessToken || accessToken==='undefined' || accessToken===null) {
-            console.log('Access token is missing');
+        if (!accessToken || accessToken==='undefined' || accessToken===null) { // If access_token invalid, return to stop function
+            //console.log('Access token is missing');
             return 'No access_token in localStorage';
         }
+        /*
         else{
             console.log(`Current access token (returnSearchResults()): ${accessToken}`);
-        }
-        console.log('endpoint: ',endPointUrl);
+        }*/
 
 
         const response = await fetch( // fetch results from Spotify api
-            endPointUrl,
+
+            endPointUrl, // Seach query sent to Spotify
             {
-              method: 'GET',
+              method: 'GET', // 'GET' method using access_token below for authorization
               headers: {
                 Authorization: `Bearer ${accessToken.toString()}`
               }
@@ -255,8 +254,7 @@ const Spotify = {
         let data = await response.json(); // stores data response
 
         if (data.error && data.error.message) { // Checks if error exists (and if it has message)
-            console.log('Error detected: ', data.error.message);
-            return data.error.message; // return error msg
+            return data.error.message;          // return error message
         }
         else {
             return data;// otherwise return data
@@ -270,31 +268,29 @@ const Spotify = {
        reset playList variable once submitted */
     async savePlaylist(playListName, trackUris, setPlaylist) {
 
-        if (!playListName || !uris) { // checks if inputs are provided
-            console.log('Either playlist name or uris is missing');
-            return;
+        if (!playListName || !trackUris) { // If either Playlist name or track Uris are missing,
+            return;                        // return to end function.
         }
 
         const accessToken = localStorage.getItem('access_token'); // get access_token
 
         /* First fetch profile (to get your profile ID to sent your playlist to)
-           See fetchProfile() from this link:
+           See fetchProfile() code example from this link:
            https://developer.spotify.com/documentation/web-api/howtos/web-app-profile
-           Also see link on output of getting user profile:
+
+           Also see link on response output of getting user profile:
            https://developer.spotify.com/documentation/web-api/reference/get-current-users-profile */
         const result = await fetch(
-            "https://api.spotify.com/v1/me",  // profile url address
+            "https://api.spotify.com/v1/me",  // endpoint for current user's profile 
             {
-                method: "GET",
+                method: "GET", // standard GET request for data using access_Token for authorization
                 headers: {Authorization: `Bearer ${accessToken}`}   
             });
 
         const profile = await result.json(); // converts result to json
-        console.log('Returned profile: ',profile);
         const user_id = profile.id;          // returns user id
-        console.log('Profile Id: ', user_id);
 
-        endPointUrl = `https://api.spotify.com/v1/users/${user_id}/playlists` ; // save 'user_id' into endpoint
+        const endPointUrl = `https://api.spotify.com/v1/users/${user_id}/playlists` ; // save 'user_id' into endpoint
 
         /* Create The New Playlist:
            See this article for example of request body:
@@ -302,42 +298,43 @@ const Spotify = {
         const newPlaylist = await fetch(
             endPointUrl,
             {
-                method: "POST",
+                method: "POST", // POST request used to send data to Spotify Server to create a resource
                 headers: {
-                           Authorization: `Bearer ${accessToken}`, 
-                           'Content-Type': 'application/json'
+                           Authorization: `Bearer ${accessToken}`, // access_Token for authorization
+                           'Content-Type': 'application/json'      // indicates that we're sending JSON data
                          },
-                body: {
-                        name: playListName,
-                        description: 'New Playlist created through project app.',
-                        public: false
-                      }
+                body: JSON.stringify({  // Converts JavaScript object to JSON string (esp. for POST and PUT methods)
+
+                    name: playListName,                                     // Playlist name
+                    description: 'Modify your playlist description here.',  // placeholder playlist description
+                    public: true                                            // Playlist set to 'public' by default
+                }) 
             }
         );
-        const playlist = await newPlaylist.json();  // convert to json
-        const playlist_id = playlist.id;            // get id of new playlist
+        const createdPlaylist = await newPlaylist.json();  // convert to json
+        const playlist_id = createdPlaylist.id;            // get id of new playlist
 
         /* Now add your tracks to playlist. See reference for more details:
            https://developer.spotify.com/documentation/web-api/reference/add-tracks-to-playlist */
         const addTracksToPlaylist = await fetch(
-            `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`,
+            `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, // endpoint for adding tracks to playlist
             {
-                method: 'POST',
+                method: 'POST', // POST request for adding tracks to playlist
                 headers: {
-                          Authorization: `Bearer ${accessToken}`, 
-                          'Content-Type': 'application/json'
+                          Authorization: `Bearer ${accessToken}`, // access_Token for authorization
+                          'Content-Type': 'application/json'      // indicates that we're sending JSON data
                         },
-                data: {
-                    uris: trackUris,
-                    position: 0
-                }
+                body: JSON.stringify({ // convert JavaScript object to JSON string
+                    uris: trackUris,   // List uris tells Spotify which tracks to add to created playlist
+                    position: 0        // position index to start adding tracks (0 = start of playlist)
+                    }) 
             }
         );
 
-        const tracksSent = await addTracksToPlaylist.json();
-        console.log('Tracks sent to new playlist: ',tracksSent);
+        //const tracksSent = await addTracksToPlaylist.json();
+        //console.log('Tracks sent to new playlist: ',tracksSent);
 
-        setPlaylist([]); // since playlist has been submitted, 'playList' variable can be reset
+        setPlaylist([]); // After playlist has been submitted, 'playList' storage is resetted
     }
 }
 
