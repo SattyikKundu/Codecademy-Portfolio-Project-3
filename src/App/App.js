@@ -63,7 +63,6 @@ const App = () => {
     <div className="App-wrapper">
       {/* In <h1> below, replace 'Jammming' title */}
       <h1>Spotify PlayMix</h1>
-
       <div className="App">
         <SearchBar 
           setSearchResults={setSearchResults} 

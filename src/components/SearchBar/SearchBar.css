@@ -1,6 +1,5 @@
-
+/***** 1st, General styling of Search Bar Area *****/
 .Search-Bar {
-    /*border: 0.5px solid black;  /* Visual placement cue */
     width: 100%;
 
     align-self: center;           /* Centers search bar horizontally, if parent is flex*/
@@ -9,43 +8,86 @@
     display: flex;                /* Creates flex layout */
     flex-direction: column;       /* input-box and button in column (stacked) */
 
-    padding-top: 3rem;            /* Padding on top of search bar container */
+    padding-top: 1rem;            /* Padding on top of search bar container */
     margin-bottom: 3.5rem;        /* Margin underneath for space from 
                                      <SearchResults> and <Playlist> components */
 }
 
+/** 2nd, styling for Search Bar input box **/
 .Search-Bar input {
     text-align: center;     /* Centers text horizontally in center of textbox */
     align-self: center;     /* Centers <input> horizontally in parent container */
+
+    font-size: 1.2rem;      /* Font-size of input text */
+
     width: 285px;           /* Fixed text box width*/
-    height: 2rem;           /* text box height */
+    height: 2.5rem;         /* text box height */
+
     margin-bottom: 2rem;    /* bottom-margin from search button below */
-    border-radius: 1rem;    /* rounded text box corners for visuals */
-    border: 0.5px solid #000; /* rgb(62,39,35); /* Border helps make textbox 'pop' from lighter background color */
+    border-radius: 1.5rem;    /* rounded text box corners for visuals */
+
+    border: 1.5px solid #000;  /* Border and box-shadow make textbox 'pop' from background */
+    box-shadow: 0px 0px 14px  #d3d3d3dc; 
 }
 
+.Search-Bar input::placeholder { 
+    color: rgb(39, 39, 39); /* Makes default placeholder text darker */
+}
+.Search-Bar input:focus::placeholder {
+    color: transparent; /* Removes placeholder when user focuses/clicks into textbox */ 
+}
+.Search-Bar input:focus {
+    outline: 0; /* removes white outline that shows in browser when clicking into textbox*/
+}
+
+/** 3rd, styling for Search Bar submit box **/
 .Search-Bar .Search-Button {
     align-self: center; /* Centers horizonally in parent container 
                            when parent uses 'flex' display layout */
 
     font-family: "Work Sans"; /* Button label text's font*/
 
-    color: white;              /* Button label text color */
-    background-color: #000;    /*rgb(139,69,19);  /* 'Saddle brown' for button color */
-    border: 0.5px solid #000;
+    color: white;                /* Button label text color */
+    background-color: #000;      /* Black for button color */
+    border: 2px solid #ffffff33; /* Grey translucent border */
+    box-shadow: 0px 4px 20px  #d3d3d3dc; /* Box shadow for pop effect */
 
-    height: 2rem;          /* button height */
-    width: 6.6rem;         /* button width  */
-
+    font-size: 2rem;        /* button text font */
+    height: 3.4rem;         /* button height */
+    width: 12rem;           /* button width  */
+    border-radius: 1.5rem;  /* Rounded button edges for styling */
+    
     text-align: center;    /* Horizontal centering of Text*/
     align-content: center; /* Vertical centering of Text */
-
-    border-radius: 1rem;   /* Rounded button edges for styling */
 }
 
 .Search-Bar .Search-Button:hover {
-    background-color: lightgray;  /* rgb(230, 162, 114); /* Button color on hover */
+    background-color: #d3d3d3;   /* Button color on hover */
+    color: black;                /* Button text on hover */
+    border: 2px solid #383838b0; /* Grey translucent border */
 
-    color: black;   /* Button text on hover */
-    cursor: pointer;  /* 'pointer' cursor on hover (to click) */
+    cursor: pointer;      /* 'pointer' cursor on hover (to click) */
+    transition: 250ms;    /* gradual button color change for visual FX */
+}
+
+.Search-Bar .Search-Button:active { 
+    transform: scale(0.90);     /** slightly shrinks button when pressed **/
+    background-color: #bdbdbd;
+}
+
+/*********************************************************************************/
+/*********************************************************************************/
+/****************** Responsive Styling for Mobile screen sizes *******************/
+/*********************************************************************************/
+/*********************************************************************************/
+
+@media screen and (min-width: 320px) and (max-width: 490px) { 
+  
+    .Search-Bar { /* New margin below search bar area and before Track display components*/
+        margin-bottom: 1.8rem;
+    }
+
+    .Search-Bar input {  /* new margin below input text box & before search button */
+        margin-bottom: 1.8rem;
+    }
 }

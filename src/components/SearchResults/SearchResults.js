@@ -5,14 +5,14 @@ const SearchResults = ({searchResults, setSearchResults, playList, setPlaylist})
 
     const addToPlayList = (trackId) => { // function to add new track to playList
 
-        const searchCopy = [...searchResults];  // get shallow copy of searchResults array
-
         // .find() returns track object that matches Id (note: don't use {} since it 
         // requires an explicit return(this caused the <Track> list below to crash earlier.))
-        const trackToAdd = searchCopy.find((track) => track.id === trackId);
+        const trackToAdd = searchResults.find((track) => track.id === trackId);
+
+        if(!trackToAdd) return; // If no track, return to stop function
 
         // .filter() returns array of tracks that DON'T match Id input
-        const newSearch = searchCopy.filter((track) => track.id !== trackId);
+        const newSearch = searchResults.filter((track) => track.id !== trackId);
 
         setSearchResults(newSearch);          // sets new Search Result without the track
         setPlaylist([...playList,trackToAdd]); // sets new Play List with new added track
@@ -26,7 +26,7 @@ const SearchResults = ({searchResults, setSearchResults, playList, setPlaylist})
               /* If no search results yet, it prints notice.
                  Otheriwse, each track is listed via .map() function. */
               (!searchResults || searchResults.length===0)
-              ? (<p>Enter and Submit your Search!</p>)
+              ? (<p>First, Enter your Search Query and Press Submit!</p>)
               : (searchResults.map((track) => (
                 <Track 
                   key={track.id} 

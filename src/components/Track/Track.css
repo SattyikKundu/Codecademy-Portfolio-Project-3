@@ -17,30 +17,36 @@
     margin-top: 0px;           
     font-family: 'Work Sans';  /* Default text font for nested divs in .Track-Info  */
     flex-grow: 1;              /* Expands to take available space since parent is flex object */
-
-    /*overflow: hidden;                      /* NEW: Prevents text overflow */
-    /*text-overflow: ellipsis;               /* NEW: Adds '...' for overflowed text */
-    /*white-space: nowrap;                   /* NEW: Prevents text from wrapping */
 }
 
 .Track-Info h3 {
-    font-size: 0.7rem;      /* Font-size for track title in <Track> object*/
+    margin-top:    0.35rem; 
+    margin-bottom: 0.9rem;
+    font-size:     1.0rem;   /* Font-size for track title in <Track> object*/
 }
 
 .Track-Info .description {
-    font-size: 0.6rem;      /* Font-size for track description elements (artist(s) & album name) */
+    font-size: 0.7rem;      /* Font-size for track description elements (artist(s) & album name) */
+    padding-bottom: 0.4rem;
 }
 
 .Track-img {                /* Styling for track image displayed for each track */
-    height: 80px;
-    width: 80px;
+    height: 84px;
+    width:  84px;
     margin: auto 10px;      /* Vertically centered with side paddings */
-    border-radius: 5px;     /* Rounded image corners for visuals*/
+    border-radius: 10px;     /* Rounded image corners for visuals*/
     flex-shrink: 0;         /* Prevents image from shrinking when resizing */
+
+    border: 1px solid rgb(209, 209, 185); /* bordering and shadow around track preview image*/
+    box-shadow: 0px 0px 12px black;
 }
 
 
-/* Styling for button depending on what function is active */
+/*********************************************************************************/
+/*********************************************************************************/
+/************ Styling for button depending on what function is active ************/
+/*********************************************************************************/
+/*********************************************************************************/
 
 .add-to-playlist { /* Styling for add('+') button in <SearchResults? component */
 
@@ -55,27 +61,34 @@
     background-color: rgb(77, 77, 77); /* Background color fo button */
     cursor: pointer;                     /* Cursor becomes pointer on hover over button */
     flex-shrink: 0;                      /* Prevents button resizing (keeps button shape) */
-    width: 2.2rem;/*42px;                /* Button width */
-    height: 2.2rem;/*42px;               /* Button height */
+    width: 2.2rem;                       /* Button width */
+    height: 2.2rem;                      /* Button height */
     border-radius: 50%;                  /* Makes button in rounded circle shape */
     border: 3px solid rgb(119, 119, 119); /* Button border */
     transition: all 0.15s;               /* Adds smooth transition for hover for visuals */
+
+    box-shadow: 0 3px 1px 3px #000000d7; /* Shadow under 'add' button */ 
 }
 
 .add-to-playlist:hover {  /* Styling when hovering over button */
     background-color: rgb(59, 165, 100);
-    color: rgb(39, 39, 39);/*beige;*/
-    border: 3px solid rgb(41, 117, 70);
+    color: rgb(39, 39, 39);
+    border: 3px solid rgb(41, 117, 70); 
+    box-shadow: 0 3px 1px 3px #143d24de; /* Shadow under 'add' button when hovering */ 
 }
 
 .add-to-playlist:active { /* Styling pressing down button */
     background-color: rgb(41, 117, 70);
-    color: beige; /*rgb(39, 39, 39);*/
+    color: beige; 
     transform: scale(0.90); /* Button slightly shrinks on press for visuals */
+    box-shadow: 0 3px 1px 3px #0c2717de; /* Shadow under 'add' button when pressing */ 
 }
 
-
-/** Style for 'drop-from-playList' button **/
+/*********************************************************************************/
+/*********************************************************************************/
+/********************* Style for 'drop-from-playList' button *********************/
+/*********************************************************************************/
+/*********************************************************************************/
 
 .drop-from-playlist {
 
@@ -90,27 +103,30 @@
     background-color: rgb(77, 77, 77); /* Background color for button */
     cursor: pointer;                     /* Cursor becomes pointer on hover over button */
     flex-shrink: 0;                      /* Prevents button resizing (keeps button shape) */
-    width: 2.2rem;/*42px;                /* Button width */
-    height: 2.2rem;/*42px;               /* Button height */
+    width: 2.2rem;                       /* Button width */
+    height: 2.2rem;                      /* Button height */
     border-radius: 10%;                  /* Makes button into square with rounded corners */
     border: 3px solid rgb(119, 119, 119); /* Button border */
     transition: all 0.15s;                  /* NEW: Adds smooth transition for hover */
+
+    box-shadow: 0 3px 1px 3px #000000d7; /* Shadow under 'add' button */ 
 }
 
 .drop-from-playlist span { /* Due to minus('-') not being completely vertically centered, 
                               translateY() is used to move the minus up until centered in button */ 
     transform: translateY(-0.2465rem);
-    /*height: 3rem; */
 }
 
 .drop-from-playlist:hover { /* Styling when hovering over button */
     background-color: rgb(224, 88, 88);
-    color:  rgb(39, 39, 39);/*beige;*/
+    color:  rgb(39, 39, 39);
     border: 3px solid rgb(170, 58, 58);
+    box-shadow: 0 3px 1px 3px #852d2dc9; /* Shadow under 'add' button when hovering */ 
 }
 
 .drop-from-playlist:active { /* Styling pressing down button */
     background-color: rgb(170, 58, 58);
-    color: beige; /*rgb(39, 39, 39);*/
+    color: beige; 
     transform: scale(0.90); /* Button slightly shrinks on press for visuals */
+    box-shadow: 0 3px 1px 3px #6e2525d5; /* Shadow under 'add' button when pressing */ 
 }

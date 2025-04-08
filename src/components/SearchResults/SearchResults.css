@@ -2,13 +2,13 @@
 .Search-Results {
     border: 2px solid black;    /* Solid border to differentiate Container from background*/
     border-radius: 1.5rem;        /* Rounds corners of Search Results container */
-    background-color:beige;     /* rgb(139,69,19);   /* 'Saddle brown' for current background color*/
-    /*overflow-y: scroll;*/
+    background-color:beige;     /* 'beige' for current background color*/
+    
     box-shadow: 0 4px 2px 2px #000000;  /* Shadow around search results container for 'pop' effect */
     padding: 0.88rem;                     /* Prevents content from touch border/edge */
 
-    width: 45%;      /* Takes portion of parent container width (to make room for Playlist container) */
-    height: 950px;   /* Height of container */
+    width: 420px; /* Takes portion of parent container width (to make room for Playlist container) */    
+    height: 620px;
 
     display: flex;    /* Flex layout with column direction used when search results 
                          (vertical list of <Track> components) are provided */
@@ -16,6 +16,7 @@
 }
 
 .Search-Results h2 { /* header <h2> styling inside container */
+    width: 100%;
     font-family: 'Poppins', sans-serif;
     font-size: 1.55rem; 
 
@@ -23,30 +24,60 @@
     margin-bottom: 0;
     padding-bottom:2px;
     border-bottom: 2px solid rgba(75, 75, 75, 0.61);   /* bottom borderline to visual separation */
-
 }
 
-.Search-Results-Display {
-    width: 100%;
+.Search-Results-Display p { /* styling for notice to submit search term */
+    font-family: 'Poppins';
+    font-size: 1rem;
+    color: rgb(51, 51, 51) ;
+}
+
+.Search-Results-Display { /* Styles display area and enables scrolling*/
+    width: 100%;            
     background-color: beige;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow-y: scroll;
 }
-
 .Search-Results-Display::-webkit-scrollbar {
-    width: 8px;   /* Controls scroll bar's thickness */
+    width: 8px;   /* Controls scroll bar area thickness */
 }
 .Search-Results-Display::-webkit-scrollbar-track {
-    background-color: transparent;/*#e0e0e0;   /* Scroll track's background color is light-gray */
-    /*border-radius: 10px;       /* Rounded corners for scrollbar track */
+    background-color: transparent;  /* Scroll track's is transparent, leaving only thumb visible */
 }
 .Search-Results-Display::-webkit-scrollbar-thumb {
-    background: rgb(167, 167, 167);/*rgb(117, 116, 110);        /* Dark color for actual thumb (aka 'horizontal scroller') contrast */
-    width: 10px;
-    border-radius: 10px;          /* Rounded corners for thumb */
-    border: 1px solid rgb(92, 92, 92);/*#b8b8b8;  /* Adds some space and contrast between thumb and track */
+    background: rgb(167, 167, 167);    /* Light color for actual thumb (aka 'horizontal scroller') contrast */
+    border-radius: 10px;                 /* Rounded corners for thumb */
+    border: 1px solid rgb(92, 92, 92); /* Adds some space and contrast between thumb and track */
+    width: 10px;                         /* scroll thumb width */
 }
 .Search-Results-Display::-webkit-scrollbar-thumb:hover {
     background: rgb(144, 110, 199); /* Thumb's color lightens on hover just like all buttons */
     border: 1px solid rgb(97, 71, 138);
+}
+
+
+/*********************************************************************************/
+/*********************************************************************************/
+/****************** Responsive Styling for Mobile screen sizes *******************/
+/*********************************************************************************/
+/*********************************************************************************/
+
+@media screen and (min-width: 320px) and (max-width: 719px) {
+    .Search-Results {
+        margin-bottom: 40px; /* Margin above <Playlist> component */  
+
+        /* Below setup ensures that .Search-Results
+           expands between 300-500px height */
+        min-height: 300px;
+        height: 66%;
+        max-height: 500px; 
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 490px) {
+
+     /* For mobile screen, take as much width as possible.*/
+    .Search-Results {
+        display: flex;
+        width: 97%;  /* 97% of parent size's width*/
+    }
 }

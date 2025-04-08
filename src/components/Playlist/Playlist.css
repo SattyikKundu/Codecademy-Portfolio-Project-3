@@ -1,21 +1,21 @@
 
 .Playlist {
-
     border: 2px solid black;         /* Solid border to differentiate Container from background*/
     border-radius: 1.5rem;             /* Rounds corners of Search Results container */
-    background-color:beige;          /* rgb(139,69,19);   /* 'Saddle brown' for current background color*/
-    /*overflow-y: scroll;*/
+    background-color:beige;          /* 'Beige' for current background color*/
+
     box-shadow: 0 4px 2px 2px #000000;  /* Shadow around search results container for 'pop' effect */
     padding: 0.88rem;                  /* Prevents content from touch border/edge */
 
-    width: 45%;       /* Takes portion of parent container width (to make room for Playlist container */
-    height: 950px;    /* Height of container */
+    width: 420px;   /* Takes portion of parent container width (to make room for Playlist container */
+    height: 620px;  /* Height of container */
 
     display: flex;          /* Stores selected tracks from search results output in Flex layout */ 
     flex-direction: column; /* column direction used when tracks are selected */
 }
 
 .Playlist input {
+    width: 100%;                         /* Matches input box width with parent */
     border: none;                        /* Removes border around input box for blending */
     font-family: 'Poppins', sans-serif;  /* Chosen placeholder/input text font */
     font-size: 1.55rem;                  /* font size */
@@ -26,6 +26,9 @@
 .Playlist input:focus {
     outline: none; /* Removes automatic textbox outline/border when user focuses/clicks into textbox */
 
+}
+.Playlist input::placeholder {
+    font-size: 100%; /*1.5rem; */
 }
 
 .Playlist input:focus::placeholder {
@@ -39,7 +42,6 @@
     width: 100%;
     background-color: beige;
     overflow-y: auto; /* Trigger's vertical scroll when playlist grows too big*/
-    overflow-x: hidden;
 }
 
 .PlayList-Display p { /* Notification when tracks aren't added to playlist yet */
@@ -78,16 +80,18 @@
     display: flex;  
     align-items: center;     /* In flex display, center button vertically */          
     justify-content: center; /* In flex display, center button horizontally */
-    /*border: 1px solid black; /**/
+
 }
 
 .submit-button {
 
     font-family: "Work Sans"; /* Button label text's font*/
 
-    color: white;              /* Button label text color */
-    background-color: #000;    /*rgb(139,69,19);  /* 'Saddle brown' for button color */
-    border: 0.5px solid #000;
+    color: beige;                          /* Button label text color */
+    background-color: rgb(77, 77, 77);     /* Black-like color for button color */
+    border: 3px solid rgb(119, 119, 119);  /* Border around button */
+    box-shadow: 0 3px 1px 3px #000000d7;   /* Shadow under 'SUBMIT Playlist' button */ 
+    transition: all 0.15s; /* Adds smooth transition visual for hover and pressing */
 
     height: 2.5rem;    /* button height */
     width: 9rem;       /* button width  */
@@ -99,8 +103,45 @@
 }
 
 .submit-button:hover {
-    background-color: lightgray;  /* rgb(230, 162, 114); /* Button color on hover */
+    cursor: pointer;   /* 'pointer' cursor on hover (to click) */
 
-    color: black;   /* Button text on hover */
+    background-color: rgb(201, 201, 201);  /* Button color on hover */
+    color: rgb(39, 39, 39);                /* Button text on hover */
+    border:  3px solid rgb(139, 139, 139); /* Dark grey border around button*/
+    box-shadow: 0 3px 1px 3px #000000d7;   /* Darker grey shadow under 'SUBMIT Playlist' button on hover*/ 
+}
+
+.submit-button:active{
     cursor: pointer;  /* 'pointer' cursor on hover (to click) */
+    transform: scale(0.90); /* Button shrink on click for visual effect*/           
+
+    background-color: rgb(110, 110, 110);  /* Button color on hover */
+    border: 3px solid #a3a3a3;             /* Lighter grey on button rim*/
+    color: rgb(255, 255, 255);             /* Button text color on hover */
+    box-shadow: 0 3px 2px 2px #000000d7;   /* Dark colored shadow under 'SUBMIT Playlist' button on hover*/ 
+}
+
+
+/*********************************************************************************/
+/*********************************************************************************/
+/****************** Responsive Styling for Mobile screen sizes *******************/
+/*********************************************************************************/
+/*********************************************************************************/
+
+@media screen and (min-width: 320px) and (max-width: 719px) {
+    .Playlist {
+        /* Below setup ensures that .Search-Results
+           expands between 300-500px height */
+        min-height: 300px;
+        height: 66%;
+        max-height: 500px; 
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 490px) {
+     /* For mobile screen, take as much width as possible.*/
+    .Playlist {
+        display: flex;
+        width: 97%;  /* 97% of parent size's width*/
+    }
 }

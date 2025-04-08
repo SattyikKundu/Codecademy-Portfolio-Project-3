@@ -5,13 +5,6 @@ html {
 }
 
 body {
-    
     margin: 0;
-
-    /* Place holder background color */
-    /*background-color: beige; 
-
-    /** Will Figure Out Background Image Later  **/
-    /* background-image: url(./images/stars-background-2-640x640.jpg); */ 
-    /* background-size: 100%;  */
+    background-image: url(./images/stars-pattern-640.jpg);
 }

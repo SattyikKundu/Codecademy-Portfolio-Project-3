@@ -19,15 +19,23 @@ const PlayList = ({playList, setPlaylist}) => {
     }
 
     const submitPlaylist = async () => { // used to submit playlist to Spotify account
-        const trackUris = playList.map((track) => track.uri);
-        await Spotify.savePlaylist(playListName, trackUris, setPlaylist);
+        //const trackUris = playList.map((track) => track.uri);
+        //await Spotify.savePlaylist(playListName, trackUris, setPlaylist);
+
+        if(playList && playList.length > 0 && playListName && playListName.length>0) {
+            const trackUris = playList.map((track) => track.uri);
+            await Spotify.savePlaylist(playListName, trackUris, setPlaylist);
+        } 
+        else {
+            alert('You need a playlist name and at least 1 track to submit!');
+        }    
     } 
 
     return (
         <div class="Playlist">
             <input 
                 // Updated playListName as user types
-                placeholder='Enter New Playlist Name...' 
+                placeholder='Enter Playlist Name...' 
                 value={playListName}
                 onChange={(event) => updateName(event)}    
             />
@@ -35,7 +43,7 @@ const PlayList = ({playList, setPlaylist}) => {
               {/* .map() used to display all current tracks in Playlist */}
               { 
               (!playList || playList.length===0)
-              ? (<p>No tracks added yet...</p>)
+              ? (<p>Then, Add a Playlist Name and at Least 1 Track to Enable Submit...</p>)
               : (playList.map((track) => (
                 <Track
                   key={track.id}
@@ -49,9 +57,12 @@ const PlayList = ({playList, setPlaylist}) => {
                 {
                     /* Button shows only if playList and name exists 
                        and their lengths are greater than 0. */
+                    /*
                     (playList && playList.length > 0 && playListName && playListName.length>0)
                     ? <div className='submit-button' onClick={() => submitPlaylist()}>SUBMIT Playlist</div>
-                    : null          
+                    : null         
+                    */ 
+                    <div className='submit-button' onClick={() => submitPlaylist()}>SUBMIT Playlist</div>
                 }
             </div>
         </div>

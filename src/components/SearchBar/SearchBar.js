@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Spotify from '../util/Spotify';
 import './SearchBar.css';
 
@@ -6,16 +6,9 @@ import './SearchBar.css';
 const SearchBar = ({setSearchResults}) => {
 
     const [onTypeInput, setOnTypeInput] = useState(''); // stores input value as it's being typed
-    const [submitClicked, setSubmitClicked] = useState(false); // toggles when submit is clicked
-    const [searchOutput, setSearchOutput] = useState([]); // stores searchResults for checking
 
     const typeSearch = (event) => { // used to track and show text as its typed in search box
         setOnTypeInput(event.target.value);
-    }
-
-    const submitSearch = () => { // On click, submitted input sent back to <App/>
-        setSearchResults(searchOutput);  // sets and stores searchResults in App.js
-        setSubmitClicked(prev => !prev); // toggles 'submitClicked' value
     }
 
     const formatData = (data) => { 
@@ -47,6 +40,7 @@ const SearchBar = ({setSearchResults}) => {
                 const seconds = Math.floor((trackTime % 60000) / 1000);
                 const formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
                 const duration =  minutes + ':' + formattedSeconds;
+
                 return { // final JavaScript object that contains important track information
                     id: track.id,
                     name: track.name,
@@ -61,40 +55,33 @@ const SearchBar = ({setSearchResults}) => {
         }            
     }
 
-    // Get search results after submitting input
-    useEffect(() =>{
+    const fetchResults = async () => {
 
-        const fetchResults = async () => {
+        if (onTypeInput==='') { return null;} // If search term empty/missing, return null ends function
 
-            if (onTypeInput==='') { return null;} // If search term empty/missing, return null ends function
+        const searchResultsData = await Spotify.returnSearchResults(onTypeInput);
 
-            const searchResultsData = await Spotify.returnSearchResults(onTypeInput);
+        if (searchResultsData === 'The access token expired') { // If token expired, refresh it
 
-            if (searchResultsData === 'The access token expired') { // If token expired, refresh it
-
-                Spotify.refreshToken(); // refresh access_token (and store updated parameters in localStorage)
-                fetchResults();         // re-run fetchResults() after refreshing token 
-            }
-            else {
-                console.log('Search Results Data: ',searchResultsData);
-                setSearchOutput(formatData(searchResultsData)); // save Search Output (after formatting data)
-            }
+            Spotify.refreshToken(); // refresh access_token (and store updated parameters in localStorage)
+            fetchResults();         // re-run fetchResults() after refreshing token 
         }
-        fetchResults(); // execute fetchResults() whenever submitClicked changes...
-    },[submitClicked]);
-
+        else {
+            setSearchResults(formatData(searchResultsData));  // save Search Output (after formatting data)
+        }
+    }
 
 
     return(
         <div className="Search-Bar">
             <input 
-                placeholder='Enter a Track Title' 
+                placeholder='Enter a Track Title'
                 value={onTypeInput} 
                 onChange={(event) => typeSearch(event)}  
             />
             <div 
                 className="Search-Button" 
-                onClick={submitSearch} 
+                onClick={fetchResults}
             >
                 SEARCH
             </div>
