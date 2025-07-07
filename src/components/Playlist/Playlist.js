@@ -23,6 +23,7 @@ const PlayList = ({playList, setPlaylist}) => {
         if(playList && playList.length > 0 && playListName && playListName.length>0) {
             const trackUris = playList.map((track) => track.uri);
             await Spotify.savePlaylist(playListName, trackUris, setPlaylist);
+            alert(`You have successfully submited playlist: '${playListName}'.`);
             setPlaylistName('');
         } 
         else {
