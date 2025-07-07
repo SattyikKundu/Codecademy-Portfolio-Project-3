@@ -24,10 +24,10 @@ within the above article.
 // First, import helper functions essential for the Code challenge generation
 import { generateRandomString, sha256, base64encode } from "./helpers";
 
-const clientId = 'f543695a790649369f8a548e31afb691'; // <= Client ID from Spotify developer account's dashboard
-const redirectUri = 'http://localhost:3000'; // <= Where the API data gets sent towards; must match 
-                                             // 'redirectUri' configured in Spotify's app dashboard.
+const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;    // <= Client ID from Spotify developer account's dashboard
 
+const redirectUri = process.env.REACT_APP_SPOTIFY_REDIRECT_URI; // <= Where the API data gets sent towards; must match 
+                                                                // 'redirectUri' configured in Spotify's app dashboard.
 const Spotify = {
 
 
@@ -51,9 +51,12 @@ const Spotify = {
 
         const authUrl = new URL('https://accounts.spotify.com/authorize'); // New URL object points to authorization endpoint
 
+        
         // Defines which permission will be requested for app
         const scope = "user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public"; 
-        /* Here are the scopes used (see: https://developer.spotify.com/documentation/web-api/concepts/scopes#list-of-scopes)
+        //const scope = "user-read-private playlist-modify-private playlist-modify-public";
+        /* Here are the scopes used 
+         * (see: https://developer.spotify.com/documentation/web-api/concepts/scopes#list-of-scopes)
          *
          * Below 2 permissions are needed when accessing user profile
          * 'user-read-private'         read access to user's subscription details
@@ -82,7 +85,8 @@ const Spotify = {
         /* Above converts 'params' object into a proper query string like:
          * 'response_type=code&client_id=...&redirect_uri=...&scope=...&code_challenge=...&code_challenge_method=S256'
          * Then appends query string to 'authUrl' url object from earlier to complete full URL.
-         * The final URL looks something like: https://accounts.spotify.com/authorize?response_type=code&client_id=...
+         * The final URL looks something like: 
+         * https://accounts.spotify.com/authorize?response_type=code&client_id=...
          */
 
         window.location.href = authUrl.toString();
@@ -234,11 +238,6 @@ const Spotify = {
             //console.log('Access token is missing');
             return 'No access_token in localStorage';
         }
-        /*
-        else{
-            console.log(`Current access token (returnSearchResults()): ${accessToken}`);
-        }*/
-
 
         const response = await fetch( // fetch results from Spotify api
 

@@ -19,15 +19,14 @@ const PlayList = ({playList, setPlaylist}) => {
     }
 
     const submitPlaylist = async () => { // used to submit playlist to Spotify account
-        //const trackUris = playList.map((track) => track.uri);
-        //await Spotify.savePlaylist(playListName, trackUris, setPlaylist);
 
         if(playList && playList.length > 0 && playListName && playListName.length>0) {
             const trackUris = playList.map((track) => track.uri);
             await Spotify.savePlaylist(playListName, trackUris, setPlaylist);
+            setPlaylistName('');
         } 
         else {
-            alert('You need a playlist name and at least 1 track to submit!');
+            alert('You need a playlist name and at least 1 track to submit!\nAlso, you need to be logged in to your Spotify account.');
         }    
     } 
 
@@ -54,16 +53,7 @@ const PlayList = ({playList, setPlaylist}) => {
                }
             </div>
             <div className='button-space'>
-                {
-                    /* Button shows only if playList and name exists 
-                       and their lengths are greater than 0. */
-                    /*
-                    (playList && playList.length > 0 && playListName && playListName.length>0)
-                    ? <div className='submit-button' onClick={() => submitPlaylist()}>SUBMIT Playlist</div>
-                    : null         
-                    */ 
-                    <div className='submit-button' onClick={() => submitPlaylist()}>SUBMIT Playlist</div>
-                }
+              <div className='submit-button' onClick={() => submitPlaylist()}>SUBMIT Playlist</div>
             </div>
         </div>
     );

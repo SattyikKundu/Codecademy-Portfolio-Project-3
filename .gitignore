@@ -2,3 +2,13 @@
 ## folder since it's too big for 
 ## uploading to github
 node_modules
+
+## Ignores .env at ANY level
+# Root-level .env
+.env        
+
+# Nested .env files
+**/.env     
+
+# Any *.env file like .env.local, .env.production in any folder 
+**/*.env    

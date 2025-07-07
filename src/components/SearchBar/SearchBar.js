@@ -2,18 +2,68 @@ import { useState } from 'react';
 import Spotify from '../util/Spotify';
 import './SearchBar.css';
 
-
 const SearchBar = ({setSearchResults}) => {
 
     const [onTypeInput, setOnTypeInput] = useState(''); // stores input value as it's being typed
 
-    const typeSearch = (event) => { // used to track and show text as its typed in search box
+    /*************************************************************************************************************/
+    /********************* All functions for the Search Bar component ********************************************/
+    /*************************************************************************************************************/
+
+    // #1: used to track and show text as its typed in search box
+    const typeSearch = (event) => { 
         setOnTypeInput(event.target.value);
     }
 
+    // #2: Checks if these authentication values are in localStorage (see Spotify.js to learn more)
+    const authenticateApp = async () => { 
+
+        let accessToken    = localStorage.getItem("access_token"); // checks if access_token is in storage
+        let refreshToken   = localStorage.getItem("refresh_token"); // checks if refresh_token is in storage
+        let expirationTime = localStorage.getItem("expiration_time"); // check if access_token is expired (if exists)
+
+        // If EITHER 'access_token' or 'refresh_token' is missing, undefined, or null..
+        if ((!accessToken || accessToken==='undefined' || accessToken===null) || 
+           (!refreshToken || refreshToken==="undefined" || refreshToken===null)) {
+
+            let urlParams = new URLSearchParams(window.location.search); // checks if auth. 'code' is already in url parameters
+            let code      = urlParams.get("code");
+
+            if (code && code !== "") {  // If 'code' exists and isn't empty, proceed...
+
+                await Spotify.getToken(code); // generate and save new access_token, refresh_token,
+                                              // and expiration_time to localStorage
+
+                window.history.replaceState({}, document.title, "/"); // Scrubs 'code' param data from url
+
+                accessToken    = localStorage.getItem("access_token");    // checks if access_token is in storage
+                refreshToken   = localStorage.getItem("refresh_token");   // checks if refresh_token is in storage
+                expirationTime = localStorage.getItem("expiration_time"); // check if access_token is expired (if exists)
+
+            } 
+            else { // There's no tokens nor 'code' available. Reauthenticate
+                alert("You need to first login to your Spotify account in order to search for tracks as well as create & save playlists. Click the 'OK' button to proceed with account login."); // first give notice to user
+                Spotify.redirectToSpotifyAuth(); // Authenticate, get 'code', and store all params in localStorage
+                return;                          // prevents function from calling below else() block since redirectToSpotifyAuth() doesn't immediately trigger
+            }
+        }
+        else{ // Otherwise, both access and refresh tokens exist
+
+            if(Spotify.isTokenExpired()) { // if authentucate token expired, reauthenticate
+                await Spotify.refreshToken();
+            }
+            else {      // access_token is NOT expired 
+                return; // exists function since token is valid
+            }
+        }
+    };
+
+
+    /* #3: Function ensures that search results output (which contains JSON data of various tracks) 
+     *     is formatted properly before storing. This helps ensure that all parameter values will be 
+     *     passed properly to other components. 
+     */
     const formatData = (data) => { 
-        // Function ensures that output is formatted properly before storing. This helps 
-        // ensure that all parameter values will be passed properly to other components. 
 
         if (data && data.tracks.items) { // Checks if data exists and if 'items' nested in data is found
 
@@ -42,33 +92,44 @@ const SearchBar = ({setSearchResults}) => {
                 const duration =  minutes + ':' + formattedSeconds;
 
                 return { // final JavaScript object that contains important track information
-                    id: track.id,
-                    name: track.name,
-                    artist: formattedArtists,
+                    id:       track.id,
+                    name:     track.name,
+                    artist:   formattedArtists,
                     duration: duration,
-                    album: track.album.name,
+                    album:    track.album.name,
                     imageUrl: track.album.images[0]?.url || '', //handles case where there's no image
-                    uri: track.uri,
+                    uri:      track.uri,
                 }
         });
         return formattedTracks; // returns all tracks as formatted
         }            
     }
 
+    // #4: Featch search results after entering into search bar
     const fetchResults = async () => {
 
-        if (onTypeInput==='') { return null;} // If search term empty/missing, return null ends function
+        const trimmedInput = onTypeInput.trim();
 
-        const searchResultsData = await Spotify.returnSearchResults(onTypeInput);
+        if (trimmedInput==='') { return null;} // If search term empty/missing, return null ends function
 
-        if (searchResultsData === 'The access token expired') { // If token expired, refresh it
+        await authenticateApp(); // Only checks auth when user clicks "Search"
 
-            Spotify.refreshToken(); // refresh access_token (and store updated parameters in localStorage)
-            fetchResults();         // re-run fetchResults() after refreshing token 
+        let searchResultsData = await Spotify.returnSearchResults(trimmedInput);
+
+        if (searchResultsData === 'The access token expired') { // If token expired, refresh it and try again
+
+            await Spotify.refreshToken(); // refresh access_token (and store updated parameters in localStorage)
+            searchResultsData = await Spotify.returnSearchResults(trimmedInput); // retry for search results 
+        }
+
+        if (searchResultsData && searchResultsData.tracks) { // if tracks returned from result format and save data
+            const formattedResultsData = formatData(searchResultsData);
+            setSearchResults(formattedResultsData);
         }
         else {
-            setSearchResults(formatData(searchResultsData));  // save Search Output (after formatting data)
+            setSearchResults([]);  // else, clear the search results data
         }
+        setOnTypeInput(''); // Clear input field after search
     }
 
 
