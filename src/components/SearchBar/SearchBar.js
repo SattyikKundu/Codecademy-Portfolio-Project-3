@@ -2,7 +2,9 @@ import { useState } from 'react';
 import Spotify from '../util/Spotify';
 import './SearchBar.css';
 
-const SearchBar = ({setSearchResults}) => {
+//const SearchBar = ({setSearchResults}) => {
+//const SearchBar = ({setSearchResults, accessToken, refreshToken, expirationTime}) => {
+const SearchBar = ({setSearchResults, loggedIn, setLoggedIn}) => {
 
     const [onTypeInput, setOnTypeInput] = useState(''); // stores input value as it's being typed
 
@@ -18,13 +20,14 @@ const SearchBar = ({setSearchResults}) => {
     // #2: Checks if these authentication values are in localStorage (see Spotify.js to learn more)
     const authenticateApp = async () => { 
 
-        let accessToken    = localStorage.getItem("access_token"); // checks if access_token is in storage
-        let refreshToken   = localStorage.getItem("refresh_token"); // checks if refresh_token is in storage
-        let expirationTime = localStorage.getItem("expiration_time"); // check if access_token is expired (if exists)
+        // let accessToken    = localStorage.getItem("access_token"); // checks if access_token is in storage
+        // let refreshToken   = localStorage.getItem("refresh_token"); // checks if refresh_token is in storage
+        // let expirationTime = localStorage.getItem("expiration_time"); // check if access_token is expired (if exists)
 
         // If EITHER 'access_token' or 'refresh_token' is missing, undefined, or null..
-        if ((!accessToken || accessToken==='undefined' || accessToken===null) || 
-           (!refreshToken || refreshToken==="undefined" || refreshToken===null)) {
+        // if ((!accessToken || accessToken==='undefined' || accessToken===null) || 
+        //    (!refreshToken || refreshToken==="undefined" || refreshToken===null)) {
+        if(!loggedIn) {
 
             let urlParams = new URLSearchParams(window.location.search); // checks if auth. 'code' is already in url parameters
             let code      = urlParams.get("code");
@@ -34,12 +37,13 @@ const SearchBar = ({setSearchResults}) => {
                 await Spotify.getToken(code); // generate and save new access_token, refresh_token,
                                               // and expiration_time to localStorage
 
+                setLoggedIn(true);
+
                 window.history.replaceState({}, document.title, "/"); // Scrubs 'code' param data from url
 
-                accessToken    = localStorage.getItem("access_token");    // checks if access_token is in storage
-                refreshToken   = localStorage.getItem("refresh_token");   // checks if refresh_token is in storage
-                expirationTime = localStorage.getItem("expiration_time"); // check if access_token is expired (if exists)
-
+                // accessToken    = localStorage.getItem("access_token");    // checks if access_token is in storage
+                // refreshToken   = localStorage.getItem("refresh_token");   // checks if refresh_token is in storage
+                // expirationTime = localStorage.getItem("expiration_time"); // check if access_token is expired (if exists)
             } 
             else { // There's no tokens nor 'code' available. Reauthenticate
                 alert("You need to first login to your Spotify account in order to search for tracks as well as create & save playlists. Click the 'OK' button to proceed with account login."); // first give notice to user
@@ -51,6 +55,7 @@ const SearchBar = ({setSearchResults}) => {
 
             if(Spotify.isTokenExpired()) { // if authentucate token expired, reauthenticate
                 await Spotify.refreshToken();
+                setLoggedIn(true);
             }
             else {      // access_token is NOT expired 
                 return; // exists function since token is valid

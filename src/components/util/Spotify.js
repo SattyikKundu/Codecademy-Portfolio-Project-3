@@ -24,7 +24,7 @@ within the above article.
 // First, import helper functions essential for the Code challenge generation
 import { generateRandomString, sha256, base64encode } from "./helpers";
 
-const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;    // <= Client ID from Spotify developer account's dashboard
+const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;  // <= Client ID from Spotify developer account's dashboard
 
 const redirectUri = process.env.REACT_APP_SPOTIFY_REDIRECT_URI; // <= Where the API data gets sent towards; must match 
                                                                 // 'redirectUri' configured in Spotify's app dashboard.
