@@ -19,7 +19,7 @@ const LogoutButtons = ({loggedIn}) => {
   return (
     <div className='logout-buttons-box'>
     {
-      (loggedIn) ? 
+      (!loggedIn) ? 
       (<button onClick={()=>handleLogout()}>Logout from App</button>) :
       (<span>After submitting your search term, you'll be redirected to Spotify login.</span>)
     }

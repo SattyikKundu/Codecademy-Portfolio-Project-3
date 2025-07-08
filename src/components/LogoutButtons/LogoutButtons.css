@@ -1,3 +1,6 @@
+/*************************************************************************/
+/******* Container for logout button (or notice for user to log in) ******/
+/*************************************************************************/
 
 .logout-buttons-box {
     display: flex;
@@ -13,18 +16,9 @@
     right: 3vw;
 }
 
-@media screen and (max-width: 767px) { 
-    .logout-buttons-box {
-        position: static;
-        flex-direction: row;
-        min-height: fit-content;
-        max-width: fit-content;
-        justify-content: space-between;
-        right: 0;
-        gap: 2rem;
-        width: 240px;
-    }
-}
+/*************************************************************************/
+/**************** Styling for 'log out from app' button ******************/
+/*************************************************************************/
 
 .logout-buttons-box > button {
     align-self: center; /* Centers horizonally in parent container 
@@ -66,11 +60,15 @@
     font-size: 0.75rem;
 }
 
+/*************************************************************************/
+/**************** Styling on tablet/mobile screen sizes ******************/
+/*************************************************************************/
+
 @media screen and (max-width: 767px) {
     .logout-buttons-box {
         position: static;
         flex-direction: row;
-        min-height: fit-content;
+        min-height: 36px;
         max-width: fit-content;
         justify-content: space-between;
         right: 0;
