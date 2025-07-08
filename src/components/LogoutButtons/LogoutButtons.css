@@ -1,0 +1,80 @@
+
+.logout-buttons-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 90px;
+    max-width: 125px;
+    width: auto;
+
+    position: absolute;
+    top: 0;
+    right: 3vw;
+}
+
+@media screen and (max-width: 767px) { 
+    .logout-buttons-box {
+        position: static;
+        flex-direction: row;
+        min-height: fit-content;
+        max-width: fit-content;
+        justify-content: space-between;
+        right: 0;
+        gap: 2rem;
+        width: 240px;
+    }
+}
+
+.logout-buttons-box > button {
+    align-self: center; /* Centers horizonally in parent container 
+                           when parent uses 'flex' display layout */
+
+    /* Button lebel text styling */
+    font-size: 0.9rem;        /* button text font */
+    font-family: "Work Sans"; /* Button label text's font*/
+    text-align: center;       /* Horizontal centering of Text*/
+    align-content: center;    /* Vertical centering of Text */
+
+    /* Button coloring */
+    color: #000;                                /* Black text color */
+    background-color: rgb(218, 218, 218);       /* Light grey button background color */
+    border: 1px solid rgb(218, 218, 218);       /* Light grey border */
+    box-shadow: 0px 0px 2px 2px rgba(190, 190, 190, 0.71); /* Box shadow for pop effect */
+
+    /* Button dimensions */
+    height: fit-content;    /* button height */
+    width: fit-content;     /* button width  */
+    border-radius: 4px;     /* Rounded button edges for styling */
+
+    cursor: pointer;
+}
+
+.logout-buttons-box > button:hover {/* Button coloring on hover*/
+
+    color: rgb(218, 218, 218);   /* Black text color */
+    background-color: #000;      /* Light grey button background color */
+    border: 1px solid #000;      /* Light grey border */
+    box-shadow: 0px 0px 2px 2px rgba(253, 253, 253, 0.8); /* Box shadow for pop effect */
+}
+
+.logout-buttons-box > button:active { /* Shrinks button on press */
+    transform: scale(0.95);
+}
+
+.logout-buttons-box > span { /* Styles alternate text when user is logged-out*/
+    font-size: 0.75rem;
+}
+
+@media screen and (max-width: 767px) {
+    .logout-buttons-box {
+        position: static;
+        flex-direction: row;
+        min-height: fit-content;
+        max-width: fit-content;
+        justify-content: space-between;
+        right: 0;
+        gap: 2rem;
+        width: 240px;
+    }
+}

@@ -53,22 +53,21 @@ const Spotify = {
 
         
         // Defines which permission will be requested for app
-        const scope = "user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public"; 
-        //const scope = "user-read-private playlist-modify-private playlist-modify-public";
+        //const scope = "user-read-private user-read-email playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public"; 
+        const scope = "user-read-private playlist-modify-private playlist-modify-public";
         /* Here are the scopes used 
          * (see: https://developer.spotify.com/documentation/web-api/concepts/scopes#list-of-scopes)
          *
-         * Below 2 permissions are needed when accessing user profile
-         * 'user-read-private'         read access to user's subscription details
-         * 'user-read-email'           read access to user's email address
-         * 
-         *  Below 4 permissions are needed when creating playlists (relevant in later method):
-         * 'playlist-read-private'       read access to user's private playlists
-         * 'playlist-read-collaborative' includes collaborative playlists when requesting a user's playlists.
+         *  Below 3 permissions are needed when accessing user profile as well as adding/editing playlists
+         * 'user-read-private'           read access to user's subscription details
          * 'playlist-modify-private'     write access to user's private playlists
          * 'playlist-modify-public'      write access to user's public playlists
+         * 
+         *  Other permissions, like those below, can be added later on depending on app features:
+         * 'user-read-email'             read access to user's email address
+         * 'playlist-read-private'       read access to user's private playlists
+         * 'playlist-read-collaborative' includes collaborative playlists when requesting a user's playlists.
          */
-
 
         const params = { // Define needed 'PKCE+OAuth' url query parameters for authorization request
             response_type: 'code',         // Required: Tells Spotify to give us authorization code (standard OAuth flow)

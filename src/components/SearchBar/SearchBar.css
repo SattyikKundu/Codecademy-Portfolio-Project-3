@@ -8,7 +8,7 @@
     display: flex;                /* Creates flex layout */
     flex-direction: column;       /* input-box and button in column (stacked) */
 
-    padding-top: 1rem;            /* Padding on top of search bar container */
+    padding-top: 2rem;            /* Padding on top of search bar container */
     margin-bottom: 3.5rem;        /* Margin underneath for space from 
                                      <SearchResults> and <Playlist> components */
 }
@@ -80,9 +80,9 @@
 /****************** Responsive Styling for Mobile screen sizes *******************/
 /*********************************************************************************/
 /*********************************************************************************/
-
-@media screen and (min-width: 320px) and (max-width: 490px) { 
   
+@media screen and (max-width: 768px) {
+
     .Search-Bar { /* New margin below search bar area and before Track display components*/
         margin-bottom: 1.8rem;
     }

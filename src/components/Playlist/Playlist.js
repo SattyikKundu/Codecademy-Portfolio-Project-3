@@ -3,7 +3,6 @@ import Track from '../Track/Track';
 import Spotify from '../util/Spotify.js';
 import './Playlist.css'; 
 
-
 const PlayList = ({playList, setPlaylist}) => {
 
     const[playListName, setPlaylistName] = useState(''); // stores name of playlist as user types
@@ -23,6 +22,7 @@ const PlayList = ({playList, setPlaylist}) => {
         if(playList && playList.length > 0 && playListName && playListName.length>0) {
             const trackUris = playList.map((track) => track.uri);
             await Spotify.savePlaylist(playListName, trackUris, setPlaylist);
+            window.scrollTo({ top: 0, behavior: 'smooth'});
             alert(`You have successfully submited playlist: '${playListName}'.`);
             setPlaylistName('');
         } 
@@ -43,7 +43,7 @@ const PlayList = ({playList, setPlaylist}) => {
               {/* .map() used to display all current tracks in Playlist */}
               { 
               (!playList || playList.length===0)
-              ? (<p>Then, Add a Playlist Name and at Least 1 Track to Enable Submit...</p>)
+              ? (<p>Then, Add a Playlist Name and at Least 1 Track to Enable Saving Playlist...</p>)
               : (playList.map((track) => (
                 <Track
                   key={track.id}
@@ -54,7 +54,7 @@ const PlayList = ({playList, setPlaylist}) => {
                }
             </div>
             <div className='button-space'>
-              <div className='submit-button' onClick={() => submitPlaylist()}>SUBMIT Playlist</div>
+              <div className='submit-button' onClick={() => submitPlaylist()}>Save To Spotify</div>
             </div>
         </div>
     );
