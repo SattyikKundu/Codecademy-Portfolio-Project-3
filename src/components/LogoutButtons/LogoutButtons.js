@@ -1,4 +1,3 @@
-import Spotify from '../util/Spotify';
 import './LogoutButtons.css';
 
 const LogoutButtons = ({loggedIn}) => {
@@ -11,15 +10,10 @@ const LogoutButtons = ({loggedIn}) => {
     alert("You have logged out from this app. Submit a search term again to re-authenticate a Spotify account.");
   };
 
-  const switchAccount = () => { // clear tokens and then login again to NEW account
-    localStorage.clear();
-    Spotify.redirectToSpotifyAuth();
-  };
-
   return (
     <div className='logout-buttons-box'>
     {
-      (!loggedIn) ? 
+      (loggedIn) ? 
       (<button onClick={()=>handleLogout()}>Logout from App</button>) :
       (<span>After submitting your search term, you'll be redirected to Spotify login.</span>)
     }
