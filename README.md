@@ -39,21 +39,36 @@ This is **Portfolio Project #3** for my Full-stack web development course on Cod
 - 🔗 **Live Site:** [https://myplaylistmaker.netlify.app](https://myplaylistmaker.netlify.app)
 
 ### **Screenshots of How App works:**
-1. Typing a track into App's search bar
-2. If login token not already on local Storage, click 'Ok' on alert which then redirects to Spotify Authentication Screen
-3. After successful login (authentication token now in localStorage), type into Search Bar again and click 'Search'
-4. Results should now be visible in 'Results' container/section.
+1. First, typing a track name (or search query) into App's search text box
+![(1) Type into search text box](https://github.com/user-attachments/assets/b6478ede-c198-4d39-a0dc-82484b819050)
 
-5.1 Click on the plus(+) button next to track to add track to the "Playlist" section
+2. If login token not already on local Storage, click 'Ok' on alert which then redirects to Spotify Authentication Screen. Otherwise, the search will work like normal.
+![(1) Click on 'Ok' in alert box to proceed to Spotify login](https://github.com/user-attachments/assets/830dcdaf-dcee-4eab-aeae-af5e5a2ccdeb)
 
-5.2 Similarly, You can click the minus(-) button in "Playlist" section to remove track from Playlist (but track doesn't go back to 
+3. If user is redirected to Spotify login page, login to your account. This will create an authentication token on your local Storage. This token allows access to Spotify account, retrieval of music tracks on search, and submitting of created playlists to user's Spotify account.
+![(3 1) Spotify Account login page (account name hidden)](https://github.com/user-attachments/assets/cc1fc909-7006-4b87-b308-cff95044e11d)
 
-  - Viewing formatted search results
-  - Building a playlist and submitting to Spotify
+4. After successful login (authentication token now in localStorage), the user should now be redirected back to App homepage. Now type into Search Bar again and click *Search* (In below screenshot, I used **The Beatles** search term). Results should now be visible in "Results" container/section (left section in below image).
+![(4) Search Results](https://github.com/user-attachments/assets/17f79feb-4e32-4c5c-b9ba-659190162077)
+
+5. When user clicks on selected "add track" (or plus) button, which is colored green when hovered over and pressed (button circled in red), the track then gets added to the "Playlist" section (right section in below image).
+![(5) Plus button to add track to playlist section](https://github.com/user-attachments/assets/2b68d9de-4a17-4fd3-9375-5c98f28c9d27)
+
+6. As you can see, the selected track from previous screenshot has now been added to the "Playlist" section. Also in this section, you can click the "delete track" (or minus) button, which is colored red on hover and press, to remove track from Playlist. However, deleting track doesn't cause it to go back to the search results section; If you want the same track again, you need to use the search bar again.
+![(6) Remove track button in 'Playlist' section](https://github.com/user-attachments/assets/e6e73e95-d74a-48dd-ac41-444cd492f963)
+
+7. Finally, in order to submit your playlist to Spotify, you must have a playlist name AND at least 1 track. In below screenshot, I typed playlist name at top of "Playlist" section; I typed **The "Beatles" (my favorites)** for my created playlist's name. Then click in *Save to Spotify* button to submit playlist.
+![(7) Ready to submit playlist](https://github.com/user-attachments/assets/28517510-fc91-45f8-9d1a-114eb85fa683)
+
+8. After clicking *Save to Spotify* button, an alert pops up notifying you to playlist being submitted. Press *OK* button to proceed.
+![(8) Alert notice that playlist was submitted](https://github.com/user-attachments/assets/6492e8c6-fa6d-4ca2-90ba-405a38039beb)
+
+9. At last, the submitted playlist should now be visible inside the logged-in user's Spotify account. In the below Screenshot of my account, you can see the same **The "Beatles" (my favorites)** playlist created earlier as well as the 4 matching tracks I added as well, just like in the screenshot for Step #7. 
+![(9 1) Playlist added to Spotify account (private info covered)](https://github.com/user-attachments/assets/307ef59c-aaa3-4325-9a31-a7868c9d0b9d)
 
 ---
 
-## IV. Limitations (Important)
+## IV. Current App Limitations (VERY Important!!!)
 
 - Spotify API restrictions prevent public use of the app until approved for production.
 - Only the developer's Spotify account can currently log in.
