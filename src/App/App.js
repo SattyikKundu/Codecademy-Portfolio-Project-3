@@ -36,12 +36,12 @@ const App = () => {
   /* Set true/false depending on IF user has all tokens needed to authentication */
   const [loggedIn, setLoggedIn] = useState(getIsLoggedIn);
 
-
   return (
     <div className="App-wrapper">
       <div id="App-header-title">
         <span>Ja<span style={{color:'#8212de'}}>mmm</span>ing</span>
-        <LogoutButtons loggedIn={loggedIn} />
+        {/* Add this back in when app login/logout is improved upon. */}
+        {/*<LogoutButtons loggedIn={loggedIn} />*/}
       </div>
       <div className="App">
         <SearchBar 

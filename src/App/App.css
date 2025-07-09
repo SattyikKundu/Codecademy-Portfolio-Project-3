@@ -20,14 +20,17 @@
     justify-content: center;
 }
 
+
 @media screen and (max-width: 767px) { 
     #App-header-title { 
         font-size: 3rem;
-        height: 120px;
 
+        /* Add this below ONCE login/logout of app is improved upon. */
+        /*
+        height: 120px;
         flex-direction: column;
         align-items: center;
-        padding-bottom: 0.5rem;
+        padding-bottom: 0.5rem;*/
     } 
 }
 
