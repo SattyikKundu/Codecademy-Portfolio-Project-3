@@ -27,7 +27,7 @@ This is **Portfolio Project #3** for my Full-stack web development course on Cod
 
 - **React**           — used 'react-scripts' for frontend development.
 - **Netlify**         — used for public deployment of the app.
-- **Spotify Web API** — used to access user's Spotify account for authentication (OAuth with PKCE flow), searching tracks, and uploading created playlist. 
+- **Spotify Web API** — used to access user's Spotify account for authentication (using PKCE flow), searching tracks, and uploading created playlist. 
 - **CSS**             — used for styling purposes.
 - **React hooks**     — used `useState` and `useEffect` for local state management and effects triggering, respectively, in react app.
 - **LocalStorage**    — used for storage and handling of authentication token (will upgrade to httpOnly cookie later on).
@@ -68,26 +68,40 @@ This is **Portfolio Project #3** for my Full-stack web development course on Cod
 
 ---
 
-## IV. Current App Limitations (VERY Important!!!)
+## IV. Current Limitations of App (VERY Important to Read!!!)
 
-- Spotify API restrictions prevent public use of the app until approved for production.
-- Only the developer's Spotify account can currently log in.
-- This limitation is due to a Spotify policy update (April 2025).
-- For full use by others, Spotify requires:
-  - Production request approval
-  - A backend for secure token exchange (recommended)
+- Due to the current Spotify API policy (as of April 2025), Spotify apps are by default in *development mode* in the Spotify Developer account.
+- This means that currently, **ONLY** the app owner(myself) and other pre-approved users can login and fully use the app uploaded on Netlify.
+- In order for anyone to login and use the app, an approval request has to be sent to Spotify asking to allow the app to run in *production mode*.
+- Currently, this app hasn't been approved to run in *production mode*. I eventually intend to request Spotify to allow my app to run in *production mode* so all public users can use my app uploaded on Netlify.
+- Essentially, my live app on Netlify (https://myplaylistmaker.netlify.app) serves mainly for display purposes until I get approval for *production mode* from Spotify.
+- If anyone wants to run the app, the current best option is to download the respository and run this app locally. Instructions are shown on next section.
 
 ---
 
 ## V. How to Use This App Locally
 
 ### a. Requirements
-- Node.js and npm installed
-- A Spotify developer account
+- Have ***Node.js*** installed to run app locally
+- Use **npm install** command to install packages listed in ***package.json*** file. 
+- A Spotify developer account to create a Spotify app that provides the Spotify API to
 
-### b. Steps to Run Locally
+### b. Steps to Set Up Spotify Developer account
+1. First create an account at: https://developer.spotify.com/.
+2. After logging in, go to dashboard. Either click on user's account icon on top-right → then click *dashboard*. Or simply type https://developer.spotify.com/dashboard in url after logging in.
+3. In dashboard, click in ***Create App*** button to create an Spotify app to connect the locally run app with.
+4. During the ***Create app*** stage, fill out the required fields including *App name*, *App description*, and *Redirect URIs* (**NOTE**: The *Redirect URIs* is where the user gets redirected to after Spotify authentication success/failure. Also, Spotify has currently prohibited *localhost* of any sort for being used as a *Redirect URI*; you'll need to use an alternative(<u>*for example*</u>: use a Tunneling Service (like *ngrok* or *localtunnel*)).
+5. After completing the fields in the ***Create app*** stage, click in *Save* button at bottom to save Spotify app settings. 
+6. The Spotify app should be created now. Save the **ClientID** as well as the **Redirect URI** you added earlier. You will need these during local setup of app (next sub-section).
 
-1. Clone this repository:
+### c. Steps to Run Locally
+
+1. First, clone this repository and save on your local machine:
    ```bash
    git clone https://github.com/yourusername/spotify-playlist-maker.git
    cd spotify-playlist-maker
+
+2. Use **npm install** command to install packages listed in ***package.json*** file.
+3. Change name of *.env.example* file to just *.env*. This file will stored the environment variables for the app.
+4. Inside the *.env* file, add the **ClientID** and the **Redirect URI** you obtained or defined during the App creation within your Spotify Developers account.
+5. Finally, you can run the app locally using a ***npm start*** command to run the app inside your Command Line Interface (CLI) or Independent Developer Environment (IDE).
