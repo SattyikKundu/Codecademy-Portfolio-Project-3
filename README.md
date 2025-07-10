@@ -75,7 +75,7 @@ This is **Portfolio Project #3** for my Full-stack web development course on Cod
 - In order for anyone to login and use the app, an approval request has to be sent to Spotify asking to allow the app to run in *production mode*.
 - Currently, this app hasn't been approved to run in *production mode*. I eventually intend to request Spotify to allow my app to run in *production mode* so all public users can use my app uploaded on Netlify.
 - Essentially, my live app on Netlify (https://myplaylistmaker.netlify.app) serves mainly for display purposes until I get approval for *production mode* from Spotify.
-- If anyone wants to run the app, the current best option is to download the respository and run this app locally. Instructions are shown on next section.
+- If anyone wants to run the app, the current **BEST OPTION** is to download the respository and run this app locally. Instructions are shown on next section.
 
 ---
 
@@ -114,9 +114,10 @@ This is **Portfolio Project #3** for my Full-stack web development course on Cod
 
 2. Use **npm install** command to install packages listed in ***package.json*** file.
 3. Change name of *.env.example* file to just *.env*. This file will stored the environment variables for the app.
-4. Inside the *.env* file, add the **ClientID** and the **Redirect URI** you obtained or defined during the App creation within your Spotify Developers account.
-5. Finally, you can run the app locally using a ***npm start*** command to run the app inside your Command Line Interface (CLI) or Independent Developer Environment (IDE).
+4. Inside the *.env* file, add the **ClientID** and the **Redirect URI** you obtained or defined during earlier during the ***Create App*** step within your Spotify Developers account. Below is the *.env.example* template (which you need to change to *.env*):
+![(15)  env file template](https://github.com/user-attachments/assets/873a8e24-c7cb-4267-acc2-4770367e14db)
 
+5. Finally, you can run the app locally using a ***npm start*** command to run the app inside your Command Line Interface (CLI) or Independent Developer Environment (IDE).
 ---
 
 ## VI. Future Improvements for App
