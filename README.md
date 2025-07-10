@@ -81,20 +81,31 @@ This is **Portfolio Project #3** for my Full-stack web development course on Cod
 
 ## V. How to Use This App Locally
 
-### a. Requirements
+### A. Requirements
 - Have ***Node.js*** installed to run app locally
 - Use **npm install** command to install packages listed in ***package.json*** file. 
 - A Spotify developer account to create a Spotify app that provides the Spotify API to
 
-### b. Steps to Set Up Spotify Developer account
+### B. Steps to Set Up Spotify Developer account
 1. First create an account at: https://developer.spotify.com/.
-2. After logging in, go to dashboard. Either click on user's account icon on top-right → then click *dashboard*. Or simply type https://developer.spotify.com/dashboard in url after logging in.
-3. In dashboard, click in ***Create App*** button to create an Spotify app to connect the locally run app with.
-4. During the ***Create app*** stage, fill out the required fields including *App name*, *App description*, and *Redirect URIs* (**NOTE**: The *Redirect URIs* is where the user gets redirected to after Spotify authentication success/failure. Also, Spotify has currently prohibited *localhost* of any sort for being used as a *Redirect URI*; you'll need to use an alternative(<u>*for example*</u>: use a Tunneling Service (like *ngrok* or *localtunnel*)).
-5. After completing the fields in the ***Create app*** stage, click in *Save* button at bottom to save Spotify app settings. 
-6. The Spotify app should be created now. Save the **ClientID** as well as the **Redirect URI** you added earlier. You will need these during local setup of app (next sub-section).
+![(10) Spotify Developers login page](https://github.com/user-attachments/assets/8b375338-3986-4662-85af-edcabe27a170)
 
-### c. Steps to Run Locally
+2. After logging in, go to dashboard. Either click on user's account icon on top-right → then click *dashboard*. Or simply type https://developer.spotify.com/dashboard in url after logging in.
+![(11) Spotify Developers Dashboard link](https://github.com/user-attachments/assets/ce92b6c8-85c1-42ef-ad01-fe859c07b435)
+
+3. In dashboard, click in ***Create App*** button to create an Spotify app to connect the locally run app with.
+![(12) Create app button](https://github.com/user-attachments/assets/53bb5770-9379-44f2-b2cb-9728d1c93806)
+
+4. During the ***Create app*** stage, fill out the required fields including *App name*, *App description*, and *Redirect URIs* (<ins>**NOTE**</ins>: The *Redirect URIs* is where the user gets redirected to after Spotify authentication success/failure. Also, Spotify has currently prohibited *localhost* of any sort for being used as a *Redirect URI*; you'll need to use an alternative (<ins>*for example*</ins>: use a Tunneling Service (like ***ngrok*** or ***localtunnel***)).
+![(13) Create app fields](https://github.com/user-attachments/assets/25ef0721-fbd7-4088-a303-81c1b1c4fb67)
+
+5. After completing the fields in the ***Create app*** page, scroll down to click on *Save* button at bottom to save Spotify app settings. 
+
+6. The Spotify app should be created now. Save the **ClientID** as well as the **Redirect URI** you added earlier. You will need these during local setup of app (next sub-section).
+![(14) Get client ID and Redirect URI](https://github.com/user-attachments/assets/33fd5519-e2f3-4e0b-85d3-130daa826c66)
+
+
+### C. Steps to Run Locally
 
 1. First, clone this repository and save on your local machine:
    ```bash
@@ -105,3 +116,15 @@ This is **Portfolio Project #3** for my Full-stack web development course on Cod
 3. Change name of *.env.example* file to just *.env*. This file will stored the environment variables for the app.
 4. Inside the *.env* file, add the **ClientID** and the **Redirect URI** you obtained or defined during the App creation within your Spotify Developers account.
 5. Finally, you can run the app locally using a ***npm start*** command to run the app inside your Command Line Interface (CLI) or Independent Developer Environment (IDE).
+
+---
+
+## VI. Future Improvements for App
+
+- Upgrade PKCE (Proof of Key Code Exchange) authentication flow to store access token in httpOnly cookie on browser instead of on localStorage for better security.
+- Add login and logout buttons to App, as well as user login info, to better show users when they're logged into the app or not.
+- Request and get approval from Spotify to run my Spotify developer account's **Jammming** app in *Production* mode instead of *Development* mode so public users can fully utilize the app from my Netlify link (https://myplaylistmaker.netlify.app).
+
+---
+## VII. Miscellaneous
+- Source for my App's repeating pattern background image: https://pixabay.com/illustrations/stars-background-pattern-seamless-1022751/
